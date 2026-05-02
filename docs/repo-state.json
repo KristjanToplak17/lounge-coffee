@@ -1,0 +1,126 @@
+{
+  "phase": "phase_7_build_output_tracking",
+  "scenes": {
+    "introReveal": {
+      "status": "implemented"
+    },
+    "heroComposition": {
+      "status": "partial"
+    },
+    "freshnessTransition": {
+      "status": "partial"
+    }
+  },
+  "verification": {
+    "requiredCommands": [
+      "build",
+      "verify:docs",
+      "verify:repo-state",
+      "verify:assets",
+      "verify:build-output",
+      "verify:browser"
+    ],
+    "browserSmokeImplemented": true,
+    "desktopSmokeRequired": true,
+    "mobileSmokeRequired": true,
+    "reducedMotionRequired": true,
+    "visualCheckpointsImplemented": true,
+    "runtimeMotionProbesImplemented": true,
+    "expectedCurrentSceneAfterIntro": "underlay",
+    "expectedIntroCompleteValue": "true",
+    "browserScenarios": [
+      {
+        "name": "desktop-full-motion",
+        "viewport": { "width": 1440, "height": 900 },
+        "reducedMotion": "no-preference",
+        "expectedMotionProfile": "full",
+        "timeoutMs": 12000,
+        "maxCls": 0.02,
+        "maxLongestLongTaskMs": 250
+      },
+      {
+        "name": "desktop-reduced-motion",
+        "viewport": { "width": 1440, "height": 900 },
+        "reducedMotion": "reduce",
+        "expectedMotionProfile": "reduced",
+        "timeoutMs": 8000,
+        "maxCls": 0.02,
+        "maxLongestLongTaskMs": 250
+      },
+      {
+        "name": "mobile-full-motion",
+        "viewport": { "width": 390, "height": 844 },
+        "isMobile": true,
+        "hasTouch": true,
+        "reducedMotion": "no-preference",
+        "expectedMotionProfile": "full",
+        "timeoutMs": 12000,
+        "maxCls": 0.03,
+        "maxLongestLongTaskMs": 300
+      }
+    ]
+  },
+  "assetBudgets": {
+    "primary": {
+      "warnBytes": 1000000,
+      "failBytes": 2500000
+    },
+    "secondary": {
+      "warnBytes": 300000,
+      "failBytes": 1000000
+    },
+    "tertiary": {
+      "warnBytes": 1000000,
+      "failBytes": 5000000
+    }
+  },
+  "buildOutput": {
+    "required": true,
+    "absoluteBudgets": {
+      "totalBytes": {
+        "warnBytes": 5600000,
+        "failBytes": 6000000
+      },
+      "jsBytes": {
+        "warnBytes": 350000,
+        "failBytes": 450000
+      },
+      "cssBytes": {
+        "warnBytes": 12000,
+        "failBytes": 25000
+      },
+      "mediaBytes": {
+        "warnBytes": 5300000,
+        "failBytes": 5700000
+      }
+    },
+    "growthBudgets": {
+      "totalBytes": {
+        "warnBytes": 200000,
+        "failBytes": 400000
+      },
+      "jsBytes": {
+        "warnBytes": 50000,
+        "failBytes": 120000
+      },
+      "cssBytes": {
+        "warnBytes": 4000,
+        "failBytes": 12000
+      },
+      "mediaBytes": {
+        "warnBytes": 150000,
+        "failBytes": 350000
+      }
+    },
+    "baseline": {
+      "totalBytes": 5494914,
+      "jsBytes": 302865,
+      "cssBytes": 5700,
+      "mediaBytes": 5185773,
+      "htmlBytes": 576,
+      "fileCount": 15
+    }
+  },
+  "assetExceptions": [],
+  "temporaryWaivers": []
+}

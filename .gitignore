@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+coverage/
+output/
+
+# Local verification and QA outputs
+qa-artifacts/
+qa-audit/
+qa-split/
+tmp-*/
+
+# Browser dumps and scratch files
+dump-dom.html
+tmp_figma_*.png
+
+# Dev and preview logs
+vite*.log
+*.err.log
+*.out.log
+
+# OS / editor noise
+.DS_Store
+Thumbs.db

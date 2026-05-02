@@ -1,0 +1,46 @@
+:root {
+  --color-cream-stage: #f0e8dc;
+  --color-orange-stage: #e75b20;
+  --color-brown-espresso: #351512;
+  --color-brown-support: #84332a;
+  --color-glow: #eec88a;
+  --color-haze: #dfc1a8;
+  --color-white: #ffffff;
+  --color-black: #0d0907;
+
+  --surface-page: linear-gradient(180deg, #f4ebde 0%, #eee4d7 100%);
+  --surface-underlay: radial-gradient(
+      circle at 18% 22%,
+      rgba(223, 193, 168, 0.56),
+      transparent 32%
+    ),
+    radial-gradient(circle at 76% 74%, rgba(238, 200, 138, 0.3), transparent 28%),
+    linear-gradient(180deg, #f0e8dc 0%, #efe4d7 100%);
+  --surface-loader: radial-gradient(
+      circle at 50% 47%,
+      rgba(238, 200, 138, 0.26),
+      transparent 20%
+    ),
+    radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.07), transparent 26%),
+    radial-gradient(circle at 78% 78%, rgba(120, 40, 12, 0.12), transparent 26%),
+    linear-gradient(180deg, #ed6428 0%, #e75b20 100%);
+
+  --font-display: "Avenir Next", "Neue Haas Grotesk Display Pro", "Helvetica Neue",
+    "Segoe UI", sans-serif;
+  --font-body: "Neue Haas Grotesk Text Pro", "Avenir Next", "Helvetica Neue",
+    "Segoe UI", sans-serif;
+
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  --radius-pill: 999px;
+  --shadow-soft: 0 20px 60px rgba(53, 21, 18, 0.12);
+  --shadow-glow: 0 18px 60px rgba(238, 200, 138, 0.2);
+  --ease-strong-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-strong-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}

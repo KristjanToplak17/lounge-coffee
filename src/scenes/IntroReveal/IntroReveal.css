@@ -1,0 +1,140 @@
+.intro-reveal {
+  position: absolute;
+  inset: 0;
+  block-size: 100vh;
+  block-size: 100svh;
+  min-height: 100vh;
+  min-height: 100svh;
+  z-index: 2;
+  overflow: hidden;
+  background: linear-gradient(180deg, #e75b20 0%, #dd3f01 100%);
+}
+
+.intro-reveal__stage {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100vh;
+  block-size: 100svh;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+}
+
+.intro-reveal__reveal-underlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 56%, rgba(238, 200, 138, 0.28), rgba(238, 200, 138, 0) 24%),
+    linear-gradient(180deg, #f6efe5 0%, #f0e8dc 100%);
+}
+
+.intro-reveal__shadow {
+  position: absolute;
+  max-inline-size: none;
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.12;
+  filter: blur(0.2px);
+  mix-blend-mode: multiply;
+  will-change: transform, opacity;
+}
+
+.intro-reveal__shadow--left {
+  transform: rotate(180deg);
+  transform-origin: center;
+}
+
+.intro-reveal__logo-wrap {
+  position: absolute;
+  inset-inline-start: 50%;
+  inset-block-start: 0;
+  transform: translateX(-50%);
+  z-index: 24;
+}
+
+.intro-reveal__logo {
+  position: absolute;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  aspect-ratio: 71 / 68;
+  opacity: 0.98;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: drop-shadow(0 4px 10px rgba(255, 255, 255, 0.12));
+}
+
+.intro-reveal__split-scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.intro-reveal__reveal-group {
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  block-size: 100vh;
+  block-size: 100svh;
+  min-height: 100vh;
+  min-height: 100svh;
+  will-change: transform, opacity;
+}
+
+.intro-reveal__panel-image,
+.intro-reveal__group-bean,
+.intro-reveal__fragment {
+  position: absolute;
+  max-inline-size: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+.intro-reveal__panel-image {
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.intro-reveal__group-bean {
+  object-fit: contain;
+  filter: drop-shadow(0 0 28px rgba(238, 200, 138, 0.32))
+    drop-shadow(0 14px 24px rgba(53, 21, 18, 0.18));
+}
+
+.intro-reveal__fragment {
+  object-fit: contain;
+  opacity: 0;
+  transform-origin: center;
+  filter: drop-shadow(0 8px 18px rgba(53, 21, 18, 0.18));
+  will-change: transform, opacity, filter;
+}
+
+.intro-reveal__progress {
+  position: absolute;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  block-size: 0.36rem;
+  border-radius: 999px;
+  background: rgba(240, 232, 220, 0.28);
+  overflow: hidden;
+  z-index: 24;
+  box-shadow: 0 0 0 1px rgba(240, 232, 220, 0.08);
+}
+
+.intro-reveal__progress-fill {
+  inline-size: 100%;
+  block-size: 100%;
+  border-radius: inherit;
+  background: rgba(240, 232, 220, 1);
+  transform-origin: left center;
+  box-shadow: 0 0 18px rgba(240, 232, 220, 0.28);
+}
+
+@media (max-width: 720px) {
+  .intro-reveal__progress {
+    block-size: 0.32rem;
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "lounge-coffee",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": ".\\node_modules\\.bin\\eslint.cmd .",
+    "test": ".\\node_modules\\.bin\\vitest.cmd run",
+    "verify": "npm run lint && npm run test && npm run build && npm run verify:docs && npm run verify:repo-state && npm run verify:assets && npm run verify:build-output && npm run verify:browser",
+    "verify:docs": "node scripts/verify-docs.mjs",
+    "verify:repo-state": "node scripts/verify-repo-state.mjs",
+    "verify:assets": "node scripts/check-asset-budgets.mjs",
+    "verify:build-output": "node scripts/check-build-output.mjs",
+    "verify:browser": "node scripts/verify-browser.mjs",
+    "audit:repo": "node scripts/audit-repo.mjs",
+    "check:repo-hygiene": "node scripts/check-repo-hygiene.mjs"
+  },
+  "dependencies": {
+    "gsap": "^3.13.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "globals": "^16.4.0",
+    "playwright": "^1.56.1",
+    "vite": "^7.1.12",
+    "vitest": "^4.0.7"
+  }
+}
