@@ -4,7 +4,6 @@ import { assetMap } from "./utils/assetMap";
 import { usePrefersReducedMotion } from "./utils/usePrefersReducedMotion";
 
 const INTRO_PRELOAD_SOURCES = [
-  assetMap.logos.dark,
   assetMap.logos.light,
   assetMap.revealPanels.left,
   assetMap.revealPanels.right,
@@ -42,11 +41,6 @@ export default function App() {
       <div className="app-shell__underlay" aria-hidden="true">
         <div className="app-shell__underlay-haze app-shell__underlay-haze--top" />
         <div className="app-shell__underlay-haze app-shell__underlay-haze--bottom" />
-        <img
-          className="app-shell__underlay-logo"
-          src={assetMap.logos.dark}
-          alt=""
-        />
       </div>
 
       {!introComplete && (

@@ -17,6 +17,16 @@
   overflow: hidden;
 }
 
+.app-shell__underlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 54%, rgba(238, 200, 138, 0.22), rgba(238, 200, 138, 0) 18%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
 .app-shell__underlay-haze {
   position: absolute;
   border-radius: 999px;
@@ -40,16 +50,6 @@
   inset-block-end: -8rem;
 }
 
-.app-shell__underlay-logo {
-  position: absolute;
-  inline-size: clamp(2.5rem, 4vw, 3.3rem);
-  inset-inline: 50%;
-  inset-block-start: clamp(2rem, 5vw, 3rem);
-  transform: translateX(-50%);
-  opacity: 0.18;
-  filter: saturate(0.9);
-}
-
 @media (max-width: 720px) {
   .app-shell__underlay-haze--top {
     inline-size: 72vw;
@@ -63,4 +63,5 @@
     block-size: 42vw;
     inset-inline-end: -10%;
   }
+
 }

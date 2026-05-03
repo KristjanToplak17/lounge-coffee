@@ -48,6 +48,7 @@ export function IntroReveal({ onComplete }) {
   const logoRef = useRef(null);
   const progressLineRef = useRef(null);
   const progressFillRef = useRef(null);
+  const underlayRef = useRef(null);
   const leftShadowRef = useRef(null);
   const rightShadowRef = useRef(null);
   const leftGroupRef = useRef(null);
@@ -75,6 +76,7 @@ export function IntroReveal({ onComplete }) {
           logo: logoRef.current,
           progressLine: progressLineRef.current,
           progressFill: progressFillRef.current,
+          underlay: underlayRef.current,
           leftShadow: leftShadowRef.current,
           rightShadow: rightShadowRef.current,
           leftGroup: leftGroupRef.current,
@@ -99,7 +101,7 @@ export function IntroReveal({ onComplete }) {
       data-scene="intro"
     >
       <div className="intro-reveal__stage">
-        <div className="intro-reveal__reveal-underlay" aria-hidden="true" />
+        <div ref={underlayRef} className="intro-reveal__reveal-underlay" aria-hidden="true" />
 
         <div className="intro-reveal__logo-wrap">
           <div
@@ -128,6 +130,11 @@ export function IntroReveal({ onComplete }) {
               className="intro-reveal__panel-image"
               src={assetMap.revealPanels.left}
               alt=""
+              style={{
+                left: `${geometry.leftPanel.left}px`,
+                width: `${geometry.leftPanel.width}px`,
+                height: `${geometry.leftPanel.height}px`
+              }}
             />
             <img
               ref={leftShadowRef}
@@ -183,6 +190,11 @@ export function IntroReveal({ onComplete }) {
               className="intro-reveal__panel-image"
               src={assetMap.revealPanels.right}
               alt=""
+              style={{
+                left: `${geometry.rightPanel.left}px`,
+                width: `${geometry.rightPanel.width}px`,
+                height: `${geometry.rightPanel.height}px`
+              }}
             />
             <img
               ref={rightShadowRef}

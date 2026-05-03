@@ -9,6 +9,7 @@ This folder is the source of truth for Lounge Coffee. Each file has a distinct r
 - `scene-map.md`: defines what exists in each scene and what each scene communicates
 - `motion-system.md`: defines how scene elements move, transition, and behave over time or scroll
 - `loader.md`: defines the technical implementation strategy for the intro loader and bean-break reveal
+- `loader-polish-spec.md`: defines the concrete loader polish targets, visual corrections, and implementation directives needed to make the intro production ready
 - `asset-inventory.md`: defines which assets exist, what role they play, and whether they are in v1 scope
 - `app-architecture.md`: defines how the codebase should be organized and which layer owns which responsibility
 - `content-contract.md`: defines the minimum required copy, UI, and structural content for v1
@@ -25,14 +26,15 @@ This folder is the source of truth for Lounge Coffee. Each file has a distinct r
 2. `scene-map.md`
 3. `motion-system.md`
 4. `loader.md` for intro-loader technical implementation guidance
-5. `design-system.md`
-6. `asset-inventory.md`
-7. `app-architecture.md`
-8. `content-contract.md`
-9. `implementation-phases.md`
-10. `repo-operations.md` when the task involves scripts, repo workflow, verification, or repo hygiene
-11. `repo-health.md` and `repo-state.json` when the task depends on current repo status or harness debt
-12. `harness-engineering-plan.md` for the long-term harness roadmap and incomplete phases
+5. `loader-polish-spec.md` when the task is tuning the live loader toward production quality
+6. `design-system.md`
+7. `asset-inventory.md`
+8. `app-architecture.md`
+9. `content-contract.md`
+10. `implementation-phases.md`
+11. `repo-operations.md` when the task involves scripts, repo workflow, verification, or repo hygiene
+12. `repo-health.md` and `repo-state.json` when the task depends on current repo status or harness debt
+13. `harness-engineering-plan.md` for the long-term harness roadmap and incomplete phases
 
 ## Decision Status
 
@@ -55,6 +57,7 @@ If two docs ever disagree:
 Narrow exception:
 
 - `loader.md` owns intro-loader implementation timing, phase choreography, and intro-specific technical tuning under the broader motion-system umbrella
+- `loader-polish-spec.md` owns the concrete correction list and review criteria for bringing the current loader implementation up to production quality
 - `motion-system.md` remains authoritative for high-level motion intent, cross-scene behavior, and global transition rules
 
 When one doc changes another doc's subject area, update both in the same pass.

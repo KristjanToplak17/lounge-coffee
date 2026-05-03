@@ -7,7 +7,8 @@ import {
 
 function applyGroupPose(pose) {
   return {
-    xPercent: pose.xPercent,
+    x: pose.xViewport ? window.innerWidth * pose.xViewport : pose.x || 0,
+    xPercent: pose.xPercent || 0,
     yPercent: pose.yPercent,
     scale: pose.scale,
     opacity: pose.opacity
@@ -21,6 +22,14 @@ function applyShadowPose(pose) {
     scale: pose.scale,
     opacity: pose.opacity
   };
+}
+
+function getCurrentFragmentStates(fragmentStates, tier) {
+  if (fragmentStates[tier]) {
+    return fragmentStates[tier];
+  }
+
+  return fragmentStates.desktop;
 }
 
 function setMotionState(root, state) {
@@ -85,6 +94,7 @@ function setDebugState({ debugState, elements, groups, shadows, fragments }) {
   });
   gsap.set(elements.progressLine, { opacity: isStart ? 1 : 0 });
   gsap.set(elements.logo, { opacity: isStart ? 1 : 0 });
+  gsap.set(elements.underlay, { opacity: isStart ? 0 : 1 });
   gsap.set(elements.leftGroup, applyGroupPose(groupState.left));
   gsap.set(elements.rightGroup, applyGroupPose(groupState.right));
   gsap.set(elements.leftShadow, applyShadowPose(shadowState.left));
@@ -112,21 +122,33 @@ function setDebugState({ debugState, elements, groups, shadows, fragments }) {
 function createReducedMotionTimeline({ elements, onComplete, reducedMotionConfig }) {
   const timeline = gsap.timeline({ onComplete });
 
+  timeline.to({}, { duration: 0.22 });
+
   timeline.to(elements.progressFill, {
-    duration: 0.5,
+    duration: 0.56,
     scaleX: 1,
     ease: "none"
   });
 
-  timeline.to({}, { duration: 0.16 });
+  timeline.to({}, { duration: 0.18 });
 
   timeline.to(
     [elements.progressLine, elements.logo],
     {
-      duration: 0.2,
+      duration: 0.24,
       opacity: 0,
       ease: "power1.out"
     }
+  );
+
+  timeline.to(
+    elements.underlay,
+    {
+      duration: 0.42,
+      opacity: 1,
+      ease: "power1.out"
+    },
+    ">"
   );
 
   timeline.to(
@@ -142,11 +164,12 @@ function createReducedMotionTimeline({ elements, onComplete, reducedMotionConfig
   timeline.to(
     elements.leftGroup,
     {
-      duration: 0.44,
+      duration: 0.6,
       xPercent: reducedMotionConfig.left.xPercent,
+      yPercent: -0.5,
       scale: reducedMotionConfig.left.scale,
       opacity: reducedMotionConfig.left.opacity,
-      ease: "power2.out"
+      ease: "cubic-bezier(0.5, 0, 0.2, 1)"
     },
     ">"
   );
@@ -154,11 +177,12 @@ function createReducedMotionTimeline({ elements, onComplete, reducedMotionConfig
   timeline.to(
     elements.rightGroup,
     {
-      duration: 0.44,
+      duration: 0.6,
       xPercent: reducedMotionConfig.right.xPercent,
+      yPercent: -0.5,
       scale: reducedMotionConfig.right.scale,
       opacity: reducedMotionConfig.right.opacity,
-      ease: "power2.out"
+      ease: "cubic-bezier(0.5, 0, 0.2, 1)"
     },
     "<"
   );
@@ -174,12 +198,13 @@ export function introRevealTimeline({ elements, reducedMotion = false, onComplet
   const timings = loaderConfig.timingsMs;
   const groups = loaderConfig.groups[tier];
   const shadows = loaderConfig.shadows;
-  const fragmentStates = loaderConfig.fragments.desktop;
+  const fragmentStates = getCurrentFragmentStates(loaderConfig.fragments, tier);
   const debugState = getIntroDebugState();
 
   gsap.set(elements.root, { opacity: 1 });
   gsap.set(elements.logo, { opacity: 1 });
   gsap.set(elements.progressLine, { opacity: 1 });
+  gsap.set(elements.underlay, { opacity: 0 });
   gsap.set(elements.progressFill, {
     scaleX: 0,
     transformOrigin: "0% 50%"
@@ -239,13 +264,23 @@ export function introRevealTimeline({ elements, reducedMotion = false, onComplet
   timeline.addLabel("startToMid");
 
   timeline.to(
+    elements.underlay,
+    {
+      duration: Math.min(0.48, (timings.startToMid / 1000) * 0.28),
+      opacity: 1,
+      ease: loaderConfig.easing.loaderFade
+    },
+    "startToMid+=0.3"
+  );
+
+  timeline.to(
     elements.logo,
     {
-      duration: Math.min(0.92, (timings.startToMid / 1000) * 0.56),
+      duration: Math.min(0.98, (timings.startToMid / 1000) * 0.48),
       opacity: 0,
       ease: loaderConfig.easing.loaderFade
     },
-    "startToMid+=0.04"
+    "startToMid"
   );
 
   timeline.to(
@@ -271,39 +306,39 @@ export function introRevealTimeline({ elements, reducedMotion = false, onComplet
   timeline.to(
     elements.leftShadow,
     {
-      duration: timings.startToMid / 1000,
+      duration: (timings.startToMid / 1000) * 0.92,
       ...applyShadowPose(shadows.mid.left),
       ease: loaderConfig.easing.startToMid
     },
-    "startToMid"
+    "startToMid+=0.08"
   );
 
   timeline.to(
     elements.rightShadow,
     {
-      duration: timings.startToMid / 1000,
+      duration: (timings.startToMid / 1000) * 0.92,
       ...applyShadowPose(shadows.mid.right),
       ease: loaderConfig.easing.startToMid
     },
-    "startToMid"
+    "startToMid+=0.08"
   );
 
   tweenFragments(
     timeline,
     elements.leftFragments,
     fragmentStates.midLeft,
-    timings.startToMid / 1000,
-    loaderConfig.easing.startToMid,
-    "startToMid+=0.12"
+    (timings.startToMid / 1000) * 0.24,
+    "power3.out",
+    "startToMid+=0.06"
   );
 
   tweenFragments(
     timeline,
     elements.rightFragments,
     fragmentStates.midRight,
-    timings.startToMid / 1000,
-    loaderConfig.easing.startToMid,
-    "startToMid+=0.12"
+    (timings.startToMid / 1000) * 0.24,
+    "power3.out",
+    "startToMid+=0.06"
   );
 
   timeline.call(
@@ -339,21 +374,21 @@ export function introRevealTimeline({ elements, reducedMotion = false, onComplet
   timeline.to(
     elements.leftGroup,
     {
-      duration: timings.midToEnd / 1000,
+      duration: (timings.midToEnd / 1000) * 0.84,
       ...applyGroupPose(groups.end.left),
       ease: loaderConfig.easing.midToEnd
     },
-    "midToEnd"
+    "midToEnd+=0.02"
   );
 
   timeline.to(
     elements.rightGroup,
     {
-      duration: timings.midToEnd / 1000,
+      duration: (timings.midToEnd / 1000) * 0.84,
       ...applyGroupPose(groups.end.right),
       ease: loaderConfig.easing.midToEnd
     },
-    "midToEnd"
+    "midToEnd+=0.02"
   );
 
   timeline.to(

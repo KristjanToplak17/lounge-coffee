@@ -35,6 +35,7 @@ Then route by task:
 - Scene purpose, naming, and on-screen contents: [`docs/scene-map.md`](./docs/scene-map.md)
 - Motion behavior, timing, transitions, reduced-motion rules: [`docs/motion-system.md`](./docs/motion-system.md)
 - Intro loader technical implementation strategy: [`docs/loader.md`](./docs/loader.md)
+- Intro loader visual corrections and production-polish targets: [`docs/loader-polish-spec.md`](./docs/loader-polish-spec.md)
 - Asset roles, priorities, scene assignments, usage rules: [`docs/asset-inventory.md`](./docs/asset-inventory.md)
 - Code ownership, scene boundaries, architecture decisions: [`docs/app-architecture.md`](./docs/app-architecture.md)
 - Copy structure and minimum UI/content requirements: [`docs/content-contract.md`](./docs/content-contract.md)
@@ -56,6 +57,7 @@ Follow the ownership and precedence already defined in [`docs/README.md`](./docs
 Additional rules:
 
 - `docs/loader.md` owns intro-loader implementation timing, phase choreography, and intro-specific technical tuning under the broader motion-system umbrella.
+- `docs/loader-polish-spec.md` owns the concrete punch list and visual acceptance criteria for polishing the current loader implementation.
 - Do not invent behavior when an existing doc already owns that decision.
 - Treat `Locked` as implement-as-specified.
 - Treat `Preferred` as the default unless implementation constraints force a change.
@@ -90,7 +92,7 @@ Use the live repository structure as your implementation map:
 
 - Before UI/layout work, read `project-brief.md`, `scene-map.md`, `design-system.md`, and `motion-system.md`.
 - Before animation work, also read `app-architecture.md` and the relevant animation ownership notes.
-- Before intro/loader/reveal work, also read `docs/loader.md`.
+- Before intro/loader/reveal work, also read `docs/loader.md` and `docs/loader-polish-spec.md` when the task involves quality tuning or visual correction.
 - Before copy/content work, read `content-contract.md`.
 - Before asset changes or new asset usage, read `asset-inventory.md`.
 - Before reorganizing files or ownership, read `app-architecture.md`.
