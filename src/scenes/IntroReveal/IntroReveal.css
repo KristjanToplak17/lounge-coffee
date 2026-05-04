@@ -7,7 +7,7 @@
   min-height: 100svh;
   z-index: 2;
   overflow: hidden;
-  background: linear-gradient(180deg, #e75b20 0%, #dd3f01 100%);
+  background: #e75b20;
 }
 
 .intro-reveal__stage {
@@ -70,6 +70,7 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
+  background: #e75b20;
 }
 
 .intro-reveal__reveal-group {
@@ -80,7 +81,6 @@
   block-size: 100svh;
   min-height: 100vh;
   min-height: 100svh;
-  background: linear-gradient(180deg, #e75b20 0%, #dd3f01 100%);
   will-change: transform, opacity;
 }
 
@@ -95,9 +95,8 @@
 
 .intro-reveal__panel-image {
   inset-block-start: 0;
+  display: block;
   max-inline-size: none;
-  object-fit: contain;
-  object-position: center;
   z-index: 0;
 }
 

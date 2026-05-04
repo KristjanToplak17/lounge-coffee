@@ -1,5 +1,5 @@
 <svg width="1012" height="1080" viewBox="0 0 1012 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M960 0H0V1080H960C944 1024 943 971 958 915C979 834 938 774 949 691C956 635 946 586 944 532C942 486 936 452 943 412C951 363 933 298 946 213C956 147 950 80 960 0Z" fill="url(#paint0_linear_161_88)"/>
+<path d="M926 0H0V1080H0V0H926L914 43L902 86L888 151L872 238L884 324L864 432L874 540L852 670L866 799L844 929L864 1026L880 1080H950L926 0Z" fill="url(#paint0_linear_161_88)"/>
 <defs>
 <linearGradient id="paint0_linear_161_88" x1="505.75" y1="0" x2="505.75" y2="1080" gradientUnits="userSpaceOnUse">
 <stop stop-color="#E75B20"/>

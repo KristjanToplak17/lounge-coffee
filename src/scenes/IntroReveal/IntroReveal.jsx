@@ -53,6 +53,10 @@ export function IntroReveal({ onComplete }) {
   const rightShadowRef = useRef(null);
   const leftGroupRef = useRef(null);
   const rightGroupRef = useRef(null);
+  const leftPanelRef = useRef(null);
+  const rightPanelRef = useRef(null);
+  const leftBeanImageRef = useRef(null);
+  const rightBeanImageRef = useRef(null);
   const leftFragmentRefs = useMemo(() => createFragmentRefCollection(), []);
   const rightFragmentRefs = useMemo(() => createFragmentRefCollection(), []);
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -81,6 +85,10 @@ export function IntroReveal({ onComplete }) {
           rightShadow: rightShadowRef.current,
           leftGroup: leftGroupRef.current,
           rightGroup: rightGroupRef.current,
+          leftPanel: leftPanelRef.current,
+          rightPanel: rightPanelRef.current,
+          leftBean: leftBeanImageRef.current,
+          rightBean: rightBeanImageRef.current,
           leftFragments: leftFragmentRefs.map((fragmentRef) => fragmentRef.current),
           rightFragments: rightFragmentRefs.map((fragmentRef) => fragmentRef.current)
         }
@@ -127,6 +135,7 @@ export function IntroReveal({ onComplete }) {
             }}
           >
             <img
+              ref={leftPanelRef}
               className="intro-reveal__panel-image"
               src={assetMap.revealPanels.left}
               alt=""
@@ -165,14 +174,16 @@ export function IntroReveal({ onComplete }) {
               />
             ))}
             <img
+              ref={leftBeanImageRef}
               className="intro-reveal__group-bean intro-reveal__group-bean--left"
-              src={assetMap.beans.left}
+              src={assetMap.beans.full}
               alt=""
               style={{
-                left: `${geometry.leftBean.left}px`,
-                top: `${geometry.leftBean.top}px`,
-                width: `${geometry.leftBean.width}px`,
-                height: `${geometry.leftBean.height}px`
+                left: `${geometry.leftBeanImage.left}px`,
+                top: `${geometry.leftBeanImage.top}px`,
+                width: `${geometry.leftBeanImage.width}px`,
+                height: `${geometry.leftBeanImage.height}px`,
+                clipPath: geometry.fractureClip.left
               }}
             />
           </div>
@@ -187,6 +198,7 @@ export function IntroReveal({ onComplete }) {
             }}
           >
             <img
+              ref={rightPanelRef}
               className="intro-reveal__panel-image"
               src={assetMap.revealPanels.right}
               alt=""
@@ -225,14 +237,16 @@ export function IntroReveal({ onComplete }) {
               />
             ))}
             <img
+              ref={rightBeanImageRef}
               className="intro-reveal__group-bean intro-reveal__group-bean--right"
-              src={assetMap.beans.right}
+              src={assetMap.beans.full}
               alt=""
               style={{
-                left: `${geometry.rightBean.left}px`,
-                top: `${geometry.rightBean.top}px`,
-                width: `${geometry.rightBean.width}px`,
-                height: `${geometry.rightBean.height}px`
+                left: `${geometry.rightBeanImage.left}px`,
+                top: `${geometry.rightBeanImage.top}px`,
+                width: `${geometry.rightBeanImage.width}px`,
+                height: `${geometry.rightBeanImage.height}px`,
+                clipPath: geometry.fractureClip.right
               }}
             />
           </div>

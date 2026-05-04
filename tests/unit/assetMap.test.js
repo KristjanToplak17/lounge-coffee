@@ -7,8 +7,7 @@ describe("assetMap", () => {
     expect(assetMap.logos.light).toBeTruthy();
     expect(assetMap.revealPanels.left).toBeTruthy();
     expect(assetMap.revealPanels.right).toBeTruthy();
-    expect(assetMap.beans.left).toBeTruthy();
-    expect(assetMap.beans.right).toBeTruthy();
+    expect(assetMap.beans.full).toBeTruthy();
   });
 
   it("keeps four fragments per reveal side", () => {

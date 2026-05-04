@@ -5,14 +5,19 @@ import {
   motionConfig
 } from "../utils/motionConfig";
 
-function applyGroupPose(pose) {
-  return {
+function applyGroupPose(pose, { includeOpacity = true } = {}) {
+  const result = {
     x: pose.xViewport ? window.innerWidth * pose.xViewport : pose.x || 0,
     xPercent: pose.xPercent || 0,
     yPercent: pose.yPercent,
-    scale: pose.scale,
-    opacity: pose.opacity
+    scale: pose.scale
   };
+
+  if (includeOpacity && pose.opacity !== undefined) {
+    result.opacity = pose.opacity;
+  }
+
+  return result;
 }
 
 function applyShadowPose(pose) {
@@ -95,8 +100,15 @@ function setDebugState({ debugState, elements, groups, shadows, fragments }) {
   gsap.set(elements.progressLine, { opacity: isStart ? 1 : 0 });
   gsap.set(elements.logo, { opacity: isStart ? 1 : 0 });
   gsap.set(elements.underlay, { opacity: isStart ? 0 : 1 });
-  gsap.set(elements.leftGroup, applyGroupPose(groupState.left));
-  gsap.set(elements.rightGroup, applyGroupPose(groupState.right));
+  gsap.set(elements.leftGroup, {
+    ...applyGroupPose(groupState.left, { includeOpacity: false }),
+    opacity: 1
+  });
+  gsap.set(elements.rightGroup, {
+    ...applyGroupPose(groupState.right, { includeOpacity: false }),
+    opacity: 1
+  });
+  gsap.set([elements.leftPanel, elements.rightPanel, elements.leftBean, elements.rightBean], { opacity: 1 });
   gsap.set(elements.leftShadow, applyShadowPose(shadowState.left));
   gsap.set(elements.rightShadow, applyShadowPose(shadowState.right));
 
@@ -210,13 +222,16 @@ export function introRevealTimeline({ elements, reducedMotion = false, onComplet
     transformOrigin: "0% 50%"
   });
   gsap.set(elements.leftGroup, {
-    ...applyGroupPose(groups.start.left),
+    ...applyGroupPose(groups.start.left, { includeOpacity: false }),
+    opacity: 1,
     transformOrigin: elements.leftGroup.style.transformOrigin || "100% 50%"
   });
   gsap.set(elements.rightGroup, {
-    ...applyGroupPose(groups.start.right),
+    ...applyGroupPose(groups.start.right, { includeOpacity: false }),
+    opacity: 1,
     transformOrigin: elements.rightGroup.style.transformOrigin || "0% 50%"
   });
+  gsap.set([elements.leftPanel, elements.rightPanel, elements.leftBean, elements.rightBean], { opacity: 1 });
   gsap.set(elements.leftShadow, applyShadowPose(shadows.start.left));
   gsap.set(elements.rightShadow, applyShadowPose(shadows.start.right));
   setFragments(elements.leftFragments, fragmentStates.start);
@@ -266,28 +281,28 @@ export function introRevealTimeline({ elements, reducedMotion = false, onComplet
   timeline.to(
     elements.underlay,
     {
-      duration: Math.min(0.48, (timings.startToMid / 1000) * 0.28),
+      duration: Math.min(0.44, (timings.startToMid / 1000) * 0.26),
       opacity: 1,
-      ease: loaderConfig.easing.loaderFade
+      ease: loaderConfig.easing.startToMid
     },
-    "startToMid+=0.3"
+    "startToMid+=0.28"
   );
 
   timeline.to(
     elements.logo,
     {
-      duration: Math.min(0.98, (timings.startToMid / 1000) * 0.48),
+      duration: Math.min(0.46, (timings.startToMid / 1000) * 0.28),
       opacity: 0,
       ease: loaderConfig.easing.loaderFade
     },
-    "startToMid"
+    "startToMid+=0.1"
   );
 
   timeline.to(
     elements.leftGroup,
     {
       duration: timings.startToMid / 1000,
-      ...applyGroupPose(groups.mid.left),
+      ...applyGroupPose(groups.mid.left, { includeOpacity: false }),
       ease: loaderConfig.easing.startToMid
     },
     "startToMid"
@@ -297,7 +312,7 @@ export function introRevealTimeline({ elements, reducedMotion = false, onComplet
     elements.rightGroup,
     {
       duration: timings.startToMid / 1000,
-      ...applyGroupPose(groups.mid.right),
+      ...applyGroupPose(groups.mid.right, { includeOpacity: false }),
       ease: loaderConfig.easing.startToMid
     },
     "startToMid"
@@ -306,39 +321,39 @@ export function introRevealTimeline({ elements, reducedMotion = false, onComplet
   timeline.to(
     elements.leftShadow,
     {
-      duration: (timings.startToMid / 1000) * 0.92,
+      duration: (timings.startToMid / 1000) * 0.94,
       ...applyShadowPose(shadows.mid.left),
       ease: loaderConfig.easing.startToMid
     },
-    "startToMid+=0.08"
+    "startToMid+=0.03"
   );
 
   timeline.to(
     elements.rightShadow,
     {
-      duration: (timings.startToMid / 1000) * 0.92,
+      duration: (timings.startToMid / 1000) * 0.94,
       ...applyShadowPose(shadows.mid.right),
       ease: loaderConfig.easing.startToMid
     },
-    "startToMid+=0.08"
+    "startToMid+=0.03"
   );
 
   tweenFragments(
     timeline,
     elements.leftFragments,
     fragmentStates.midLeft,
-    (timings.startToMid / 1000) * 0.24,
-    "power3.out",
-    "startToMid+=0.06"
+    (timings.startToMid / 1000) * 0.32,
+    loaderConfig.easing.startToMid,
+    "startToMid+=0.14"
   );
 
   tweenFragments(
     timeline,
     elements.rightFragments,
     fragmentStates.midRight,
-    (timings.startToMid / 1000) * 0.24,
-    "power3.out",
-    "startToMid+=0.06"
+    (timings.startToMid / 1000) * 0.32,
+    loaderConfig.easing.startToMid,
+    "startToMid+=0.14"
   );
 
   timeline.call(
@@ -374,21 +389,21 @@ export function introRevealTimeline({ elements, reducedMotion = false, onComplet
   timeline.to(
     elements.leftGroup,
     {
-      duration: (timings.midToEnd / 1000) * 0.84,
-      ...applyGroupPose(groups.end.left),
+      duration: timings.midToEnd / 1000,
+      ...applyGroupPose(groups.end.left, { includeOpacity: false }),
       ease: loaderConfig.easing.midToEnd
     },
-    "midToEnd+=0.02"
+    "midToEnd"
   );
 
   timeline.to(
     elements.rightGroup,
     {
-      duration: (timings.midToEnd / 1000) * 0.84,
-      ...applyGroupPose(groups.end.right),
+      duration: timings.midToEnd / 1000,
+      ...applyGroupPose(groups.end.right, { includeOpacity: false }),
       ease: loaderConfig.easing.midToEnd
     },
-    "midToEnd+=0.02"
+    "midToEnd"
   );
 
   timeline.to(

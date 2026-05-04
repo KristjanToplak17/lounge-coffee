@@ -18,6 +18,19 @@ The repository already includes the full asset base needed for the first impleme
 - V1 scope: yes
 - Notes: full bean should read as one object before the split; halves must align precisely
 
+### Reveal Seam Panels
+
+- Files:
+  - `assets/revealBackground/left-reveal.svg`
+  - `assets/revealBackground/right-reveal.svg`
+  - `assets/revealBackground/left-reveal-baked.png`
+  - `assets/revealBackground/right-reveal-baked.png`
+- Narrative role: seam edge source for the intro crack / reveal
+- Scene assignment: intro sequence only
+- Priority: primary
+- V1 scope: yes
+- Notes: baked seam panels are the production edge-source assets for the current intro implementation; legacy SVGs remain in repo as reference / fallback inputs and should not be deleted until the seam system is intentionally replaced
+
 ### Bean Fragments
 
 - Files:
