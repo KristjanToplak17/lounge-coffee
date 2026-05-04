@@ -5,7 +5,7 @@
       "status": "implemented"
     },
     "heroComposition": {
-      "status": "partial"
+      "status": "implemented"
     },
     "freshnessTransition": {
       "status": "partial"
@@ -26,7 +26,7 @@
     "reducedMotionRequired": true,
     "visualCheckpointsImplemented": true,
     "runtimeMotionProbesImplemented": true,
-    "expectedCurrentSceneAfterIntro": "underlay",
+    "expectedCurrentSceneAfterIntro": "hero",
     "expectedIntroCompleteValue": "true",
     "browserScenarios": [
       {

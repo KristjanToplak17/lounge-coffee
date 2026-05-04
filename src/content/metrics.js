@@ -1,5 +1,5 @@
-export const placeholderMetrics = [
-  { label: "Sections planned", value: "3" },
-  { label: "Hero cup variants", value: "4" },
-  { label: "Bean fragments", value: "8" }
+export const heroMetrics = [
+  { label: "Flavors", value: "20+" },
+  { label: "Reviews", value: "12k+" },
+  { label: "Pasteries", value: "15+" }
 ];

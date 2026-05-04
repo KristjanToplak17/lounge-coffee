@@ -1,4 +1,5 @@
 .intro-reveal {
+  --loader-orange: #e24d10;
   position: absolute;
   inset: 0;
   block-size: 100vh;
@@ -7,7 +8,7 @@
   min-height: 100svh;
   z-index: 2;
   overflow: hidden;
-  background: #e75b20;
+  background: transparent;
 }
 
 .intro-reveal__stage {
@@ -18,16 +19,17 @@
   min-height: 100vh;
   min-height: 100svh;
   overflow: hidden;
+  background: transparent;
 }
 
 .intro-reveal__reveal-underlay {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 50% 54%, rgba(238, 200, 138, 0.24), rgba(238, 200, 138, 0) 21%),
-    radial-gradient(circle at 48% 42%, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 20%),
-    linear-gradient(180deg, #f6efe5 0%, #f0e8dc 100%);
+  background: transparent;
   overflow: hidden;
+  will-change: auto;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .intro-reveal__shadow {
@@ -70,7 +72,6 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
-  background: #e75b20;
 }
 
 .intro-reveal__reveal-group {
@@ -82,9 +83,10 @@
   min-height: 100vh;
   min-height: 100svh;
   will-change: transform, opacity;
+  overflow: visible;
 }
 
-.intro-reveal__panel-image,
+.intro-reveal__panel-surface,
 .intro-reveal__group-bean,
 .intro-reveal__fragment {
   position: absolute;
@@ -93,11 +95,11 @@
   pointer-events: none;
 }
 
-.intro-reveal__panel-image {
-  inset-block-start: 0;
-  display: block;
-  max-inline-size: none;
+.intro-reveal__panel-surface {
+  inset: 0;
+  background: var(--loader-orange);
   z-index: 0;
+  will-change: clip-path;
 }
 
 .intro-reveal__group-bean {
@@ -113,7 +115,7 @@
   transform-origin: center;
   filter: drop-shadow(0 6px 14px rgba(53, 21, 18, 0.16));
   will-change: transform, opacity, filter;
-  z-index: 4;
+  z-index: 2;
 }
 
 .intro-reveal__progress {

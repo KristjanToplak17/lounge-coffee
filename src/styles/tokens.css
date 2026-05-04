@@ -41,6 +41,28 @@
   --radius-pill: 999px;
   --shadow-soft: 0 20px 60px rgba(53, 21, 18, 0.12);
   --shadow-glow: 0 18px 60px rgba(238, 200, 138, 0.2);
+  --hero-cup-shadow: 0 28px 54px rgba(53, 21, 18, 0.18);
+
+  --hero-header-height: 88px;
+  --hero-logo-width: 56px;
+  --hero-nav-size: 22px;
+  --hero-nav-letter-spacing: -0.5px;
+  --hero-nav-icon-size: 24px;
+  --hero-nav-color: #351512;
+  --hero-stat-value-size: 30px;
+  --hero-stat-label-size: 20px;
+  --hero-headline-size: clamp(3rem, 4vw, 3.625rem);
+  --hero-headline-leading: 0.94;
+  --hero-cta-height: 60px;
+  --hero-cta-padding-x: 1.35rem;
+  --hero-stage-max-width: 1440px;
+  --hero-copy-width: 520px;
+  --hero-atmosphere-blur: 90px;
+  --hero-cup-red-width: 354px;
+  --hero-cup-yellow-width: 408px;
+  --hero-cup-black-width: 387px;
+  --hero-cup-orange-width: 448px;
+
   --ease-strong-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-strong-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }

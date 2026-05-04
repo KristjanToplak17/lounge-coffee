@@ -4,6 +4,19 @@
  */
 
 const INTRO_DEBUG_STATE_VALUES = new Set(["start", "mid", "end"]);
+const REVEAL_SIDES = ["left", "right"];
+const REVEAL_GROUP_CLIP_PATHS = {
+  closed: {
+    left: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+    right: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"
+  },
+  open: {
+    left:
+      "polygon(0% 0%, 100% 0%, 99.78% 16%, 99.96% 34%, 99.3% 58%, 99.88% 82%, 99.08% 100%, 0% 100%)",
+    right:
+      "polygon(0.22% 0%, 100% 0%, 100% 100%, 0.92% 100%, 0.12% 82%, 0.7% 58%, 0.04% 34%, 0.3% 16%)"
+  }
+};
 
 export function getLoaderViewportTier(viewportWidth) {
   if (viewportWidth <= 720) {
@@ -42,6 +55,57 @@ function offsetScaledBox(box, scale, offsetX = 0) {
   };
 }
 
+function resolveGroupAnchorBox(box, scale, groupWidth, viewportHeight) {
+  const width = box.width * scale;
+  const height = box.height * scale;
+
+  return {
+    left:
+      box.left !== undefined
+        ? box.left * scale
+        : groupWidth - width - (box.right || 0) * scale,
+    top:
+      box.top !== undefined
+        ? box.top * scale
+        : viewportHeight - height - (box.bottom || 0) * scale,
+    width,
+    height
+  };
+}
+
+function getTierSideGeometry(tierGeometry, side) {
+  return tierGeometry.sides?.[side] || {};
+}
+
+function buildRevealSideGeometry({
+  side,
+  scale,
+  geometry,
+  tierGeometry,
+  panelLeft,
+  groupWidth,
+  viewportHeight
+}) {
+  const baseSide = geometry.sides[side];
+  const tierSide = getTierSideGeometry(tierGeometry, side);
+  const sideGeometry = {
+    bean: tierSide.bean || baseSide.bean,
+    shadow: tierSide.shadow || baseSide.shadow,
+    fragments: tierSide.fragments || baseSide.fragments
+  };
+
+  return {
+    panel: {
+      left: panelLeft,
+      width: (side === "left" ? geometry.leftAssetWidth : geometry.rightAssetWidth) * scale,
+      height: viewportHeight
+    },
+    bean: offsetScaledBox(sideGeometry.bean, scale, panelLeft),
+    shadow: resolveGroupAnchorBox(sideGeometry.shadow, scale, groupWidth, viewportHeight),
+    fragments: sideGeometry.fragments.map((fragment) => offsetScaledBox(fragment, scale, panelLeft))
+  };
+}
+
 export function getIntroRevealGeometry(viewportWidth, viewportHeight) {
   const geometry = motionConfig.loader.geometry;
   const safeViewportWidth = Math.max(1, viewportWidth || 0);
@@ -57,45 +121,49 @@ export function getIntroRevealGeometry(viewportWidth, viewportHeight) {
   const rightGroupWidth = safeViewportWidth - viewportCenterX + seamGapPx;
   const leftPanelLeft = edgeOverscanPx + leftGroupWidth - geometry.leftSeamAnchorX * scale;
   const rightPanelLeft = -geometry.rightSeamAnchorX * scale;
-  const leftBean = tierGeometry.leftBean || geometry.leftBean;
-  const rightBean = tierGeometry.rightBean || geometry.rightBean;
-  const leftBeanImage = tierGeometry.leftBeanImage || geometry.leftBeanImage;
-  const rightBeanImage = tierGeometry.rightBeanImage || geometry.rightBeanImage;
-  const leftShadow = tierGeometry.leftShadow || geometry.leftShadow;
-  const rightShadow = tierGeometry.rightShadow || geometry.rightShadow;
   const progress = tierGeometry.progress || geometry.progress;
   const logo = tierGeometry.logo || geometry.logo;
-  const leftFragments = tierGeometry.fragments?.left || geometry.fragments.left;
-  const rightFragments = tierGeometry.fragments?.right || geometry.fragments.right;
 
   return {
     scale,
-    leftGroup: {
-      left: -edgeOverscanPx,
-      width: leftGroupWidth + edgeOverscanPx,
-      transformOrigin: "100% 50%"
+    sides: {
+      left: {
+        group: {
+          left: -edgeOverscanPx,
+          width: leftGroupWidth + edgeOverscanPx,
+          transformOrigin: "100% 50%",
+          clipPathClosed: REVEAL_GROUP_CLIP_PATHS.closed.left,
+          clipPathOpen: REVEAL_GROUP_CLIP_PATHS.open.left
+        },
+        ...buildRevealSideGeometry({
+          side: "left",
+          scale,
+          geometry,
+          tierGeometry,
+          panelLeft: leftPanelLeft,
+          groupWidth: leftGroupWidth + edgeOverscanPx,
+          viewportHeight: safeViewportHeight
+        })
+      },
+      right: {
+        group: {
+          left: viewportCenterX - seamGapPx,
+          width: rightGroupWidth + edgeOverscanPx,
+          transformOrigin: "0% 50%",
+          clipPathClosed: REVEAL_GROUP_CLIP_PATHS.closed.right,
+          clipPathOpen: REVEAL_GROUP_CLIP_PATHS.open.right
+        },
+        ...buildRevealSideGeometry({
+          side: "right",
+          scale,
+          geometry,
+          tierGeometry,
+          panelLeft: rightPanelLeft,
+          groupWidth: rightGroupWidth + edgeOverscanPx,
+          viewportHeight: safeViewportHeight
+        })
+      }
     },
-    rightGroup: {
-      left: viewportCenterX - seamGapPx,
-      width: rightGroupWidth + edgeOverscanPx,
-      transformOrigin: "0% 50%"
-    },
-    leftPanel: {
-      left: leftPanelLeft,
-      width: geometry.leftAssetWidth * scale,
-      height: safeViewportHeight
-    },
-    rightPanel: {
-      left: rightPanelLeft,
-      width: geometry.rightAssetWidth * scale,
-      height: safeViewportHeight
-    },
-    leftBean: offsetScaledBox(leftBean, scale, leftPanelLeft),
-    rightBean: offsetScaledBox(rightBean, scale, rightPanelLeft),
-    leftBeanImage: offsetScaledBox(leftBeanImage, scale, leftPanelLeft),
-    rightBeanImage: offsetScaledBox(rightBeanImage, scale, rightPanelLeft),
-    leftShadow: offsetScaledBox(leftShadow, scale, leftPanelLeft),
-    rightShadow: offsetScaledBox(rightShadow, scale, rightPanelLeft),
     progress: {
       width: progress.width * scale,
       bottom: progress.bottom * scale
@@ -103,10 +171,6 @@ export function getIntroRevealGeometry(viewportWidth, viewportHeight) {
     logo: {
       width: logo.width * scale,
       top: logo.top * scale
-    },
-    fragments: {
-      left: leftFragments.map((fragment) => offsetScaledBox(fragment, scale, leftPanelLeft)),
-      right: rightFragments.map((fragment) => offsetScaledBox(fragment, scale, rightPanelLeft))
     },
     fractureClip: geometry.fractureClip
   };
@@ -116,52 +180,34 @@ export const motionConfig = {
   loader: {
     debugState: null,
     timingsMs: {
-      initialHold: 300,
-      loaderFill: 1080,
-      loaderCompleteHold: 500,
-      loaderFade: 220,
-      startToMid: 1550,
-      midHold: 360,
-      midToEnd: 2700
+      initialHold: 360,
+      loaderFill: 1240,
+      loaderCompleteHold: 560,
+      loaderFade: 200,
+      startToMid: 1880,
+      midHold: 260,
+      midToEnd: 3340
     },
     easing: {
       loaderFade: "cubic-bezier(0.23, 1, 0.32, 1)",
-      startToMid: "cubic-bezier(0.5, 0, 0.2, 1)",
+      startToMid: "cubic-bezier(0.77, 0, 0.175, 1)",
       midHold: "linear",
-      midToEnd: "cubic-bezier(0.5, 0.1, 0.5, 1)"
+      midToEnd: "cubic-bezier(0.23, 1, 0.32, 1)"
+    },
+    underlay: {
+      start: "inset(0 50% 0 50%)",
+      release: "inset(0 48.8% 0 48.8%)",
+      mid: "inset(0 42.6% 0 42.6%)",
+      end: "inset(0 0% 0 0%)"
     },
     geometry: {
       designHeight: 1080,
-      // These widths and seam anchors match the reveal door geometry so the
-      // crack edge seats into the bean break instead of reading like a flat slit.
+      // Seam anchors are solved against the reveal door art so the world split
+      // and the bean fracture stay visually seated together.
       leftAssetWidth: 1012,
       rightAssetWidth: 986,
       leftSeamAnchorX: 914,
       rightSeamAnchorX: 72,
-      leftBean: {
-        left: 852,
-        top: 318,
-        width: 149,
-        height: 334
-      },
-      rightBean: {
-        left: 52,
-        top: 318,
-        width: 149,
-        height: 334
-      },
-      leftBeanImage: {
-        left: 744,
-        top: 318,
-        width: 298,
-        height: 334
-      },
-      rightBeanImage: {
-        left: -97,
-        top: 318,
-        width: 298,
-        height: 334
-      },
       fractureClip: {
         left:
           "polygon(0% 0%, 58% 0%, 56.5% 4%, 54.5% 8%, 52.8% 15%, 51.8% 23%, 52.6% 34%, 50.5% 44%, 51.6% 56%, 49.6% 68%, 51.2% 80%, 53.5% 91%, 56.5% 97%, 58.5% 100%, 0% 100%)",
@@ -170,101 +216,111 @@ export const motionConfig = {
       },
       logo: {
         width: 80,
-        top: 68
+        top: 84
       },
       progress: {
-        width: 448,
-        bottom: 340,
+        width: 470,
+        bottom: 270
       },
-      leftShadow: {
-        left: -88,
-        top: 690,
-        width: 620,
-        height: 336
-      },
-      rightShadow: {
-        left: 212,
-        top: -34,
-        width: 954,
-        height: 520
-      },
-      fragments: {
-        left: [
-          { left: 937, top: 470, width: 28, height: 40 },
-          { left: 930, top: 482, width: 36, height: 34 },
-          { left: 933, top: 474, width: 48, height: 46 },
-          { left: 944, top: 500, width: 25, height: 29 }
-        ],
-        right: [
-          { left: 28, top: 470, width: 30, height: 39 },
-          { left: 35, top: 482, width: 38, height: 34 },
-          { left: 30, top: 487, width: 50, height: 36 },
-          { left: 24, top: 466, width: 48, height: 70 }
-        ]
+      sides: {
+        left: {
+          bean: {
+            left: 768,
+            top: 344,
+            width: 298,
+            height: 334
+          },
+          shadow: {
+            left: -126,
+            bottom: -52,
+            width: 566,
+            height: 318
+          },
+          fragments: [
+            { left: 918, top: 468, width: 56, height: 80 },
+            { left: 904, top: 486, width: 72, height: 68 },
+            { left: 896, top: 510, width: 96, height: 92 },
+            { left: 912, top: 548, width: 50, height: 58 }
+          ]
+        },
+        right: {
+          bean: {
+            left: -73,
+            top: 344,
+            width: 298,
+            height: 334
+          },
+          shadow: {
+            right: -92,
+            top: -58,
+            width: 624,
+            height: 370
+          },
+          fragments: [
+            { left: 18, top: 470, width: 60, height: 78 },
+            { left: 22, top: 486, width: 76, height: 68 },
+            { left: 14, top: 502, width: 100, height: 72 },
+            { left: 8, top: 452, width: 96, height: 140 }
+          ]
+        }
       },
       tiers: {
         desktop: {
-          edgeOverscanPx: 264,
+          edgeOverscanPx: 320,
           startSeamGapPx: 0
         },
         compact: {
-          edgeOverscanPx: 220,
+          edgeOverscanPx: 272,
           startSeamGapPx: 0,
           logo: {
-            width: 76,
-            top: 64
+            width: 78,
+            top: 78
           },
           progress: {
-            width: 398,
-            bottom: 392
+            width: 420,
+            bottom: 316
           }
         },
         mobile: {
-          edgeOverscanPx: 182,
+          edgeOverscanPx: 226,
           startSeamGapPx: 0,
-          leftBean: {
-            left: 858,
-            top: 338,
-            width: 138,
-            height: 310
-          },
-          rightBean: {
-            left: 48,
-            top: 338,
-            width: 138,
-            height: 310
-          },
-          leftBeanImage: {
-            left: 750,
-            top: 338,
-            width: 276,
-            height: 310
-          },
-          rightBeanImage: {
-            left: -90,
-            top: 338,
-            width: 276,
-            height: 310
-          },
           logo: {
             width: 74,
-            top: 72
+            top: 80
           },
           progress: {
-            width: 360,
-            bottom: 362
+            width: 356,
+            bottom: 308
           },
-          leftShadow: {
-            left: -72,
-            top: 726,
-            width: 560,
-            height: 302
-          },
-          rightShadow: {
-            left: 246,
-            top: -18,
-            width: 826,
-            height: 450
+          sides: {
+            left: {
+              bean: {
+                left: 774,
+                top: 358,
+                width: 276,
+                height: 310
+              },
+              shadow: {
+                left: -76,
+                bottom: -26,
+                width: 420,
+                height: 246
+              }
+            },
+            right: {
+              bean: {
+                left: -66,
+                top: 358,
+                width: 276,
+                height: 310
+              },
+              shadow: {
+                right: -52,
+                top: -34,
+                width: 476,
+                height: 286
+              }
+            }
           }
         }
       }
@@ -272,61 +328,81 @@ export const motionConfig = {
     fragments: {
       desktop: {
         start: [
-          { x: -4, y: 7, rotation: -4, scale: 0.68, opacity: 0.01 },
-          { x: -2, y: 6, rotation: 6, scale: 0.66, opacity: 0.01 },
-          { x: -5, y: -1, rotation: -7, scale: 0.7, opacity: 0.01 },
-          { x: -1, y: 4, rotation: 5, scale: 0.64, opacity: 0.01 }
+          { x: -3, y: 4, rotation: -3, scale: 0.66, opacity: 0.01 },
+          { x: -1, y: 3, rotation: 4, scale: 0.62, opacity: 0.01 },
+          { x: -4, y: 0, rotation: -6, scale: 0.68, opacity: 0.01 },
+          { x: -1, y: 2, rotation: 4, scale: 0.6, opacity: 0.01 }
         ],
-        midLeft: [
-          { x: -164, y: -120, rotation: -16, scale: 0.8, opacity: 0.74 },
-          { x: -220, y: -8, rotation: -42, scale: 0.74, opacity: 0.68 },
-          { x: -154, y: 82, rotation: 18, scale: 0.8, opacity: 0.72 },
-          { x: -178, y: 178, rotation: -22, scale: 0.72, opacity: 0.64 }
-        ],
-        midRight: [
-          { x: 172, y: -110, rotation: 18, scale: 0.82, opacity: 0.72 },
-          { x: 220, y: 0, rotation: -16, scale: 0.78, opacity: 0.68 },
-          { x: 168, y: 88, rotation: -28, scale: 0.74, opacity: 0.66 },
-          { x: 188, y: 182, rotation: -16, scale: 0.8, opacity: 0.64 }
-        ],
-        holdLeft: [
-          { x: -176, y: -132, rotation: -18, scale: 0.82, opacity: 0.76 },
-          { x: -236, y: -12, rotation: -46, scale: 0.76, opacity: 0.7 },
-          { x: -166, y: 96, rotation: 22, scale: 0.82, opacity: 0.74 },
-          { x: -188, y: 194, rotation: -24, scale: 0.74, opacity: 0.66 }
-        ],
-        holdRight: [
-          { x: 182, y: -124, rotation: 20, scale: 0.82, opacity: 0.74 },
-          { x: 236, y: 2, rotation: -18, scale: 0.8, opacity: 0.7 },
-          { x: 176, y: 100, rotation: -30, scale: 0.76, opacity: 0.68 },
-          { x: 198, y: 196, rotation: -18, scale: 0.82, opacity: 0.66 }
-        ],
-        endLeft: [
-          { x: -328, y: -192, rotation: -34, scale: 0.9, opacity: 0.82 },
-          { x: -412, y: -26, rotation: -88, scale: 0.82, opacity: 0.72 },
-          { x: -318, y: 146, rotation: 42, scale: 0.88, opacity: 0.78 },
-          { x: -350, y: 294, rotation: -40, scale: 0.8, opacity: 0.66 }
-        ],
-        endRight: [
-          { x: 316, y: -186, rotation: 34, scale: 0.9, opacity: 0.8 },
-          { x: 410, y: -14, rotation: -34, scale: 0.84, opacity: 0.72 },
-          { x: 308, y: 154, rotation: -48, scale: 0.78, opacity: 0.68 },
-          { x: 342, y: 302, rotation: -28, scale: 0.86, opacity: 0.64 }
-        ]
+        release: {
+          left: [
+            { x: -52, y: -28, rotation: -8, scale: 0.9, opacity: 0.28 },
+            { x: -76, y: 2, rotation: -18, scale: 0.84, opacity: 0.26 },
+            { x: -58, y: 34, rotation: 12, scale: 0.88, opacity: 0.24 },
+            { x: -74, y: 74, rotation: -14, scale: 0.8, opacity: 0.2 }
+          ],
+          right: [
+            { x: 52, y: -28, rotation: 8, scale: 0.9, opacity: 0.28 },
+            { x: 76, y: 2, rotation: -12, scale: 0.86, opacity: 0.26 },
+            { x: 58, y: 32, rotation: -16, scale: 0.86, opacity: 0.24 },
+            { x: 74, y: 72, rotation: -8, scale: 0.84, opacity: 0.2 }
+          ]
+        },
+        mid: {
+          left: [
+            { x: -162, y: -112, rotation: -18, scale: 0.96, opacity: 0.78 },
+            { x: -248, y: -6, rotation: -46, scale: 0.9, opacity: 0.72 },
+            { x: -188, y: 96, rotation: 20, scale: 0.94, opacity: 0.74 },
+            { x: -228, y: 196, rotation: -24, scale: 0.86, opacity: 0.64 }
+          ],
+          right: [
+            { x: 162, y: -112, rotation: 18, scale: 0.96, opacity: 0.78 },
+            { x: 248, y: -6, rotation: -18, scale: 0.92, opacity: 0.72 },
+            { x: 188, y: 94, rotation: -26, scale: 0.9, opacity: 0.72 },
+            { x: 228, y: 198, rotation: -16, scale: 0.92, opacity: 0.64 }
+          ]
+        },
+        hold: {
+          left: [
+            { x: -186, y: -126, rotation: -20, scale: 0.98, opacity: 0.8 },
+            { x: -272, y: -10, rotation: -50, scale: 0.92, opacity: 0.74 },
+            { x: -206, y: 108, rotation: 22, scale: 0.96, opacity: 0.76 },
+            { x: -248, y: 222, rotation: -26, scale: 0.88, opacity: 0.66 }
+          ],
+          right: [
+            { x: 186, y: -124, rotation: 20, scale: 0.98, opacity: 0.8 },
+            { x: 272, y: -6, rotation: -20, scale: 0.94, opacity: 0.74 },
+            { x: 206, y: 110, rotation: -30, scale: 0.92, opacity: 0.74 },
+            { x: 248, y: 224, rotation: -18, scale: 0.94, opacity: 0.66 }
+          ]
+        },
+        end: {
+          left: [
+            { x: -404, y: -236, rotation: -38, scale: 1.08, opacity: 0.84 },
+            { x: -518, y: -34, rotation: -94, scale: 0.98, opacity: 0.74 },
+            { x: -394, y: 188, rotation: 48, scale: 1.06, opacity: 0.8 },
+            { x: -432, y: 362, rotation: -44, scale: 0.96, opacity: 0.68 }
+          ],
+          right: [
+            { x: 404, y: -228, rotation: 36, scale: 1.08, opacity: 0.82 },
+            { x: 516, y: -22, rotation: -36, scale: 1, opacity: 0.74 },
+            { x: 392, y: 192, rotation: -52, scale: 0.98, opacity: 0.7 },
+            { x: 428, y: 366, rotation: -30, scale: 1.04, opacity: 0.66 }
+          ]
+        }
       }
     },
     shadows: {
       start: {
-        left: { opacity: 0.08, scale: 1, xPercent: 0, yPercent: 0 },
-        right: { opacity: 0.075, scale: 1, xPercent: 0, yPercent: 0 }
+        left: { opacity: 0.14, scale: 1, xPercent: 0, yPercent: 0 },
+        right: { opacity: 0.132, scale: 1, xPercent: 0, yPercent: 0 }
       },
       mid: {
-        left: { opacity: 0.1, scale: 1.04, xPercent: -1, yPercent: 1 },
-        right: { opacity: 0.09, scale: 1.03, xPercent: 1, yPercent: -1 }
+        left: { opacity: 0.16, scale: 1.05, xPercent: -2.6, yPercent: 2.6 },
+        right: { opacity: 0.152, scale: 1.05, xPercent: 2.6, yPercent: -2.2 }
       },
       end: {
-        left: { opacity: 0.02, scale: 1.12, xPercent: -4, yPercent: 6 },
-        right: { opacity: 0.02, scale: 1.1, xPercent: 4, yPercent: -3 }
+        left: { opacity: 0.01, scale: 1.18, xPercent: -12, yPercent: 12 },
+        right: { opacity: 0.01, scale: 1.18, xPercent: 12, yPercent: -10 }
       }
     },
     groups: {
@@ -336,12 +412,12 @@ export const motionConfig = {
           right: { x: 0, xPercent: 0, yPercent: 0, scale: 1, opacity: 1 }
         },
         mid: {
-          left: { x: -118, xPercent: 0, yPercent: -0.4, scale: 1.12, opacity: 1 },
-          right: { x: 118, xPercent: 0, yPercent: -0.4, scale: 1.12, opacity: 1 }
+          left: { x: -124, xPercent: 0, yPercent: 0.2, scale: 1.14, opacity: 1 },
+          right: { x: 124, xPercent: 0, yPercent: 0.2, scale: 1.14, opacity: 1 }
         },
         end: {
-          left: { xViewport: -1.52, xPercent: 0, yPercent: -5.4, scale: 2.66, opacity: 1 },
-          right: { xViewport: 1.52, xPercent: 0, yPercent: -5.4, scale: 2.66, opacity: 1 }
+          left: { xViewport: -1.76, xPercent: 0, yPercent: -1.8, scale: 4.18, opacity: 1 },
+          right: { xViewport: 1.76, xPercent: 0, yPercent: -1.8, scale: 4.18, opacity: 1 }
         }
       },
       compact: {
@@ -350,12 +426,12 @@ export const motionConfig = {
           right: { x: 0, xPercent: 0, yPercent: 0, scale: 1, opacity: 1 }
         },
         mid: {
-          left: { x: -96, xPercent: 0, yPercent: -0.4, scale: 1.1, opacity: 1 },
-          right: { x: 96, xPercent: 0, yPercent: -0.4, scale: 1.1, opacity: 1 }
+          left: { x: -104, xPercent: 0, yPercent: 0.2, scale: 1.12, opacity: 1 },
+          right: { x: 104, xPercent: 0, yPercent: 0.2, scale: 1.12, opacity: 1 }
         },
         end: {
-          left: { xViewport: -1.44, xPercent: 0, yPercent: -4.7, scale: 2.42, opacity: 1 },
-          right: { xViewport: 1.44, xPercent: 0, yPercent: -4.7, scale: 2.42, opacity: 1 }
+          left: { xViewport: -1.64, xPercent: 0, yPercent: -1.4, scale: 3.76, opacity: 1 },
+          right: { xViewport: 1.64, xPercent: 0, yPercent: -1.4, scale: 3.76, opacity: 1 }
         }
       },
       mobile: {
@@ -364,12 +440,12 @@ export const motionConfig = {
           right: { x: 0, xPercent: 0, yPercent: 0, scale: 1, opacity: 1 }
         },
         mid: {
-          left: { x: -76, xPercent: 0, yPercent: -0.2, scale: 1.08, opacity: 1 },
-          right: { x: 76, xPercent: 0, yPercent: -0.2, scale: 1.08, opacity: 1 }
+          left: { x: -82, xPercent: 0, yPercent: 0.1, scale: 1.1, opacity: 1 },
+          right: { x: 82, xPercent: 0, yPercent: 0.1, scale: 1.1, opacity: 1 }
         },
         end: {
-          left: { xViewport: -1.32, xPercent: 0, yPercent: -3.4, scale: 2.08, opacity: 1 },
-          right: { xViewport: 1.32, xPercent: 0, yPercent: -3.4, scale: 2.08, opacity: 1 }
+          left: { xViewport: -1.48, xPercent: 0, yPercent: -0.8, scale: 3.26, opacity: 1 },
+          right: { xViewport: 1.48, xPercent: 0, yPercent: -0.8, scale: 3.26, opacity: 1 }
         }
       }
     },
@@ -381,3 +457,5 @@ export const motionConfig = {
   stickyTransitionStart: "top top",
   stickyTransitionEnd: "+=120%"
 };
+
+export { REVEAL_SIDES };

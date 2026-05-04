@@ -16,6 +16,7 @@ import logoLight from "../../assets/logo/logo-white.webp";
 import revealPanelLeft from "../../assets/revealBackground/left-reveal-baked.png";
 import revealPanelRight from "../../assets/revealBackground/right-reveal-baked.png";
 import shadowCoffeeLeaf from "../../assets/shadows/shadow-coffeeLeaf.webp";
+import stickerMascot from "../../assets/stickers/sticker-mascot.webp";
 
 export const assetMap = {
   logos: {
@@ -35,6 +36,9 @@ export const assetMap = {
   },
   shadows: {
     coffeeLeaf: shadowCoffeeLeaf
+  },
+  stickers: {
+    mascot: stickerMascot
   },
   cups: {
     black: coffeeCupBlack,

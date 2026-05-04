@@ -2,7 +2,7 @@ import React, { createRef, useEffect, useLayoutEffect, useMemo, useRef, useState
 import { gsap } from "gsap";
 import { introRevealTimeline } from "../../animations/introRevealTimeline";
 import { assetMap } from "../../utils/assetMap";
-import { getIntroRevealGeometry } from "../../utils/motionConfig";
+import { getIntroRevealGeometry, REVEAL_SIDES } from "../../utils/motionConfig";
 import { usePrefersReducedMotion } from "../../utils/usePrefersReducedMotion";
 import "./IntroReveal.css";
 
@@ -43,22 +43,29 @@ function createFragmentRefCollection() {
   return Array.from({ length: 4 }, () => createRef());
 }
 
+function createSideRefs() {
+  return {
+    group: createRef(),
+    panel: createRef(),
+    bean: createRef(),
+    shadow: createRef(),
+    fragments: createFragmentRefCollection()
+  };
+}
+
 export function IntroReveal({ onComplete }) {
   const rootRef = useRef(null);
   const logoRef = useRef(null);
   const progressLineRef = useRef(null);
   const progressFillRef = useRef(null);
   const underlayRef = useRef(null);
-  const leftShadowRef = useRef(null);
-  const rightShadowRef = useRef(null);
-  const leftGroupRef = useRef(null);
-  const rightGroupRef = useRef(null);
-  const leftPanelRef = useRef(null);
-  const rightPanelRef = useRef(null);
-  const leftBeanImageRef = useRef(null);
-  const rightBeanImageRef = useRef(null);
-  const leftFragmentRefs = useMemo(() => createFragmentRefCollection(), []);
-  const rightFragmentRefs = useMemo(() => createFragmentRefCollection(), []);
+  const sideRefs = useMemo(
+    () => ({
+      left: createSideRefs(),
+      right: createSideRefs()
+    }),
+    []
+  );
   const prefersReducedMotion = usePrefersReducedMotion();
   const viewportSize = useViewportSize();
   const geometry = getIntroRevealGeometry(viewportSize.width, viewportSize.height);
@@ -81,16 +88,22 @@ export function IntroReveal({ onComplete }) {
           progressLine: progressLineRef.current,
           progressFill: progressFillRef.current,
           underlay: underlayRef.current,
-          leftShadow: leftShadowRef.current,
-          rightShadow: rightShadowRef.current,
-          leftGroup: leftGroupRef.current,
-          rightGroup: rightGroupRef.current,
-          leftPanel: leftPanelRef.current,
-          rightPanel: rightPanelRef.current,
-          leftBean: leftBeanImageRef.current,
-          rightBean: rightBeanImageRef.current,
-          leftFragments: leftFragmentRefs.map((fragmentRef) => fragmentRef.current),
-          rightFragments: rightFragmentRefs.map((fragmentRef) => fragmentRef.current)
+          sides: {
+            left: {
+              group: sideRefs.left.group.current,
+              panel: sideRefs.left.panel.current,
+              bean: sideRefs.left.bean.current,
+              shadow: sideRefs.left.shadow.current,
+              fragments: sideRefs.left.fragments.map((fragmentRef) => fragmentRef.current)
+            },
+            right: {
+              group: sideRefs.right.group.current,
+              panel: sideRefs.right.panel.current,
+              bean: sideRefs.right.bean.current,
+              shadow: sideRefs.right.shadow.current,
+              fragments: sideRefs.right.fragments.map((fragmentRef) => fragmentRef.current)
+            }
+          }
         }
       });
     }, rootRef);
@@ -99,7 +112,7 @@ export function IntroReveal({ onComplete }) {
       cancelled = true;
       ctx.revert();
     };
-  }, [leftFragmentRefs, onComplete, prefersReducedMotion, rightFragmentRefs]);
+  }, [onComplete, prefersReducedMotion, sideRefs]);
 
   return (
     <section
@@ -125,131 +138,76 @@ export function IntroReveal({ onComplete }) {
         </div>
 
         <div className="intro-reveal__split-scene" aria-hidden="true">
-          <div
-            ref={leftGroupRef}
-            className="intro-reveal__reveal-group intro-reveal__reveal-group--left"
-            style={{
-              left: `${geometry.leftGroup.left}px`,
-              width: `${geometry.leftGroup.width}px`,
-              transformOrigin: geometry.leftGroup.transformOrigin
-            }}
-          >
-            <img
-              ref={leftPanelRef}
-              className="intro-reveal__panel-image"
-              src={assetMap.revealPanels.left}
-              alt=""
-              style={{
-                left: `${geometry.leftPanel.left}px`,
-                width: `${geometry.leftPanel.width}px`,
-                height: `${geometry.leftPanel.height}px`
-              }}
-            />
-            <img
-              ref={leftShadowRef}
-              className="intro-reveal__shadow intro-reveal__shadow--left"
-              src={assetMap.shadows.coffeeLeaf}
-              alt=""
-              aria-hidden="true"
-              style={{
-                left: `${geometry.leftShadow.left}px`,
-                top: `${geometry.leftShadow.top}px`,
-                width: `${geometry.leftShadow.width}px`,
-                height: `${geometry.leftShadow.height}px`
-              }}
-            />
-            {assetMap.beanFragments.left.map((fragment, index) => (
-              <img
-                key={`left-fragment-${index + 1}`}
-                ref={leftFragmentRefs[index]}
-                className="intro-reveal__fragment intro-reveal__fragment--left"
-                src={fragment}
-                alt=""
-                style={{
-                  left: `${geometry.fragments.left[index].left}px`,
-                  top: `${geometry.fragments.left[index].top}px`,
-                  width: `${geometry.fragments.left[index].width}px`,
-                  height: `${geometry.fragments.left[index].height}px`
-                }}
-              />
-            ))}
-            <img
-              ref={leftBeanImageRef}
-              className="intro-reveal__group-bean intro-reveal__group-bean--left"
-              src={assetMap.beans.full}
-              alt=""
-              style={{
-                left: `${geometry.leftBeanImage.left}px`,
-                top: `${geometry.leftBeanImage.top}px`,
-                width: `${geometry.leftBeanImage.width}px`,
-                height: `${geometry.leftBeanImage.height}px`,
-                clipPath: geometry.fractureClip.left
-              }}
-            />
-          </div>
+          {REVEAL_SIDES.map((side) => {
+            const sideGeometry = geometry.sides[side];
+            const refs = sideRefs[side];
 
-          <div
-            ref={rightGroupRef}
-            className="intro-reveal__reveal-group intro-reveal__reveal-group--right"
-            style={{
-              left: `${geometry.rightGroup.left}px`,
-              width: `${geometry.rightGroup.width}px`,
-              transformOrigin: geometry.rightGroup.transformOrigin
-            }}
-          >
-            <img
-              ref={rightPanelRef}
-              className="intro-reveal__panel-image"
-              src={assetMap.revealPanels.right}
-              alt=""
-              style={{
-                left: `${geometry.rightPanel.left}px`,
-                width: `${geometry.rightPanel.width}px`,
-                height: `${geometry.rightPanel.height}px`
-              }}
-            />
-            <img
-              ref={rightShadowRef}
-              className="intro-reveal__shadow intro-reveal__shadow--right"
-              src={assetMap.shadows.coffeeLeaf}
-              alt=""
-              aria-hidden="true"
-              style={{
-                left: `${geometry.rightShadow.left}px`,
-                top: `${geometry.rightShadow.top}px`,
-                width: `${geometry.rightShadow.width}px`,
-                height: `${geometry.rightShadow.height}px`
-              }}
-            />
-            {assetMap.beanFragments.right.map((fragment, index) => (
-              <img
-                key={`right-fragment-${index + 1}`}
-                ref={rightFragmentRefs[index]}
-                className="intro-reveal__fragment intro-reveal__fragment--right"
-                src={fragment}
-                alt=""
+            return (
+              <div
+                key={side}
+                ref={refs.group}
+                className={`intro-reveal__reveal-group intro-reveal__reveal-group--${side}`}
                 style={{
-                  left: `${geometry.fragments.right[index].left}px`,
-                  top: `${geometry.fragments.right[index].top}px`,
-                  width: `${geometry.fragments.right[index].width}px`,
-                  height: `${geometry.fragments.right[index].height}px`
+                  left: `${sideGeometry.group.left}px`,
+                  width: `${sideGeometry.group.width}px`,
+                  transformOrigin: sideGeometry.group.transformOrigin
                 }}
-              />
-            ))}
-            <img
-              ref={rightBeanImageRef}
-              className="intro-reveal__group-bean intro-reveal__group-bean--right"
-              src={assetMap.beans.full}
-              alt=""
-              style={{
-                left: `${geometry.rightBeanImage.left}px`,
-                top: `${geometry.rightBeanImage.top}px`,
-                width: `${geometry.rightBeanImage.width}px`,
-                height: `${geometry.rightBeanImage.height}px`,
-                clipPath: geometry.fractureClip.right
-              }}
-            />
-          </div>
+              >
+                <div
+                  ref={refs.panel}
+                  className={`intro-reveal__panel-surface intro-reveal__panel-surface--${side}`}
+                  aria-hidden="true"
+                  style={{
+                    clipPath: sideGeometry.group.clipPathOpen
+                  }}
+                />
+
+                <img
+                  ref={refs.shadow}
+                  className={`intro-reveal__shadow intro-reveal__shadow--${side}`}
+                  src={assetMap.shadows.coffeeLeaf}
+                  alt=""
+                  aria-hidden="true"
+                  style={{
+                    left: `${sideGeometry.shadow.left}px`,
+                    top: `${sideGeometry.shadow.top}px`,
+                    width: `${sideGeometry.shadow.width}px`,
+                    height: `${sideGeometry.shadow.height}px`
+                  }}
+                />
+
+                {assetMap.beanFragments[side].map((fragment, index) => (
+                  <img
+                    key={`${side}-fragment-${index + 1}`}
+                    ref={refs.fragments[index]}
+                    className={`intro-reveal__fragment intro-reveal__fragment--${side}`}
+                    src={fragment}
+                    alt=""
+                    style={{
+                      left: `${sideGeometry.fragments[index].left}px`,
+                      top: `${sideGeometry.fragments[index].top}px`,
+                      width: `${sideGeometry.fragments[index].width}px`,
+                      height: `${sideGeometry.fragments[index].height}px`
+                    }}
+                  />
+                ))}
+
+                <img
+                  ref={refs.bean}
+                  className={`intro-reveal__group-bean intro-reveal__group-bean--${side}`}
+                  src={assetMap.beans.full}
+                  alt=""
+                  style={{
+                    left: `${sideGeometry.bean.left}px`,
+                    top: `${sideGeometry.bean.top}px`,
+                    width: `${sideGeometry.bean.width}px`,
+                    height: `${sideGeometry.bean.height}px`,
+                    clipPath: geometry.fractureClip[side]
+                  }}
+                />
+              </div>
+            );
+          })}
         </div>
 
         <div
