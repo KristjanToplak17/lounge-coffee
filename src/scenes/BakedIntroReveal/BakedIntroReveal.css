@@ -1,0 +1,142 @@
+.baked-intro-reveal {
+  --loader-orange: #e75b20;
+  --loader-orange-deep: #dd3f01;
+  position: absolute;
+  inset: 0;
+  block-size: 100vh;
+  block-size: 100svh;
+  min-height: 100vh;
+  min-height: 100svh;
+  z-index: 2;
+  overflow: hidden;
+  background: transparent;
+}
+
+.baked-intro-reveal__stage {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100vh;
+  block-size: 100svh;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  background: transparent;
+}
+
+.baked-intro-reveal__backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 44%, rgba(223, 193, 168, 0.48), transparent 16%),
+    radial-gradient(circle at 50% 62%, rgba(231, 91, 32, 0.08), transparent 26%),
+    linear-gradient(180deg, #f6efe5 0%, #efe4d6 100%);
+}
+
+.baked-intro-reveal__split-scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.baked-intro-reveal__group {
+  position: absolute;
+  top: 0;
+  overflow: visible;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.baked-intro-reveal__group--panel {
+  z-index: 4;
+}
+
+.baked-intro-reveal__group--content {
+  z-index: 6;
+}
+
+.baked-intro-reveal__extension,
+.baked-intro-reveal__seam-cap,
+.baked-intro-reveal__panel,
+.baked-intro-reveal__shadow,
+.baked-intro-reveal__fragment,
+.baked-intro-reveal__bean,
+.baked-intro-reveal__logo {
+  position: absolute;
+  display: block;
+  max-width: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+.baked-intro-reveal__extension {
+  top: 0;
+  background: linear-gradient(180deg, var(--loader-orange) 0%, var(--loader-orange-deep) 100%);
+  z-index: 0;
+}
+
+.baked-intro-reveal__seam-cap {
+  top: 0;
+  background: linear-gradient(180deg, var(--loader-orange) 0%, var(--loader-orange-deep) 100%);
+  z-index: 0;
+}
+
+.baked-intro-reveal__panel {
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.baked-intro-reveal__shadow {
+  opacity: 0;
+  mix-blend-mode: multiply;
+  filter: blur(0.4px);
+  z-index: 2;
+}
+
+.baked-intro-reveal__shadow--right {
+  transform-origin: top right;
+}
+
+.baked-intro-reveal__fragment {
+  opacity: 0;
+  transform-origin: center;
+  filter: drop-shadow(0 6px 14px rgba(53, 21, 18, 0.18));
+  z-index: 3;
+}
+
+.baked-intro-reveal__bean {
+  z-index: 4;
+}
+
+.baked-intro-reveal__loader-ui {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  pointer-events: none;
+}
+
+.baked-intro-reveal__logo {
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.96;
+  filter: drop-shadow(0 6px 14px rgba(255, 255, 255, 0.14));
+}
+
+.baked-intro-reveal__progress {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: rgba(240, 232, 220, 0.24);
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(240, 232, 220, 0.08);
+}
+
+.baked-intro-reveal__progress-fill {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: rgba(246, 239, 229, 0.98);
+  transform-origin: left center;
+  box-shadow: 0 0 14px rgba(240, 232, 220, 0.18);
+}

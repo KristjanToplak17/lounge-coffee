@@ -1,6 +1,7 @@
 :root {
   --color-cream-stage: #f0e8dc;
   --color-orange-stage: #e75b20;
+  --color-orange-stage-hover: #cf4817;
   --color-brown-espresso: #351512;
   --color-brown-support: #84332a;
   --color-glow: #eec88a;
@@ -58,10 +59,10 @@
   --hero-stage-max-width: 1440px;
   --hero-copy-width: 520px;
   --hero-atmosphere-blur: 90px;
-  --hero-cup-red-width: 354px;
-  --hero-cup-yellow-width: 408px;
-  --hero-cup-black-width: 387px;
-  --hero-cup-orange-width: 448px;
+  --hero-cup-red-width: 316px;
+  --hero-cup-yellow-width: 364px;
+  --hero-cup-black-width: 316px;
+  --hero-cup-orange-width: 356px;
 
   --ease-strong-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-strong-in-out: cubic-bezier(0.77, 0, 0.175, 1);

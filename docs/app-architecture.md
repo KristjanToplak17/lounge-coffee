@@ -18,15 +18,16 @@ This document defines how the codebase should be organized so future agents can 
 
 ### Intro Sequence
 
-Own in `src/scenes/IntroReveal/`
+Own in `src/scenes/BakedIntroReveal/`
 
 - intro stage layout
-- bean stack and loading line
-- reveal mask container
+- side-owned baked panel groups
+- split bean reveal composition
+- loading logo and progress line
 
 Animation ownership:
 
-- `src/animations/introRevealTimeline.js`
+- local GSAP timeline inside `src/scenes/BakedIntroReveal/BakedIntroReveal.jsx`
 
 ### Hero Composition
 

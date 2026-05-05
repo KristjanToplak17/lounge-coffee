@@ -12,9 +12,13 @@ For the intro specifically, motion must read as a physical reveal born from the 
 
 - hero object motion is the slowest and most authoritative
 - supporting product motion is coordinated but secondary
-- sticker and accent motion is shorter, later, and subordinate
+- sticker and accent motion is shorter, later, and subordinate unless a scene-specific exception is explicitly approved
 - scene transition motion is structural and editorial, not decorative
 - intro reveal-group motion is the structural driver of the intro
+
+Approved exception for the current hero reveal:
+
+- the mascot badge may join the synchronized hero reveal timing when needed to preserve the approved loader-to-hero handoff and final poster composition
 
 ## Allowed Motion Types
 
@@ -44,8 +48,15 @@ For the intro, the preferred reveal mechanism is physical reveal-group separatio
 `Locked`:
 
 - intro sequence: time-based
-- hero entrance: time-based, triggered by reveal completion
+- hero entrance: time-based
 - freshness transition: scroll-based
+
+`Locked` hero reveal synchronization for the current v1 hero:
+
+- the hero reveal begins when the loader enters `midToEnd`
+- the hero reveal finishes when loader `midToEnd` finishes
+- hero reveal must not wait for `introComplete`
+- the current static hero layout remains the final end state
 
 ## Intro Sequence Decisions
 

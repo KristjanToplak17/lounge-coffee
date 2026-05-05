@@ -113,12 +113,12 @@
       }
     },
     "baseline": {
-      "totalBytes": 5494914,
-      "jsBytes": 302865,
-      "cssBytes": 5700,
-      "mediaBytes": 5185773,
+      "totalBytes": 5944600,
+      "jsBytes": 310353,
+      "cssBytes": 18517,
+      "mediaBytes": 5615154,
       "htmlBytes": 576,
-      "fileCount": 15
+      "fileCount": 17
     }
   },
   "assetExceptions": [],
