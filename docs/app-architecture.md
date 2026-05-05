@@ -27,7 +27,9 @@ Own in `src/scenes/BakedIntroReveal/`
 
 Animation ownership:
 
-- local GSAP timeline inside `src/scenes/BakedIntroReveal/BakedIntroReveal.jsx`
+- shared baked intro motion helpers inside `src/scenes/BakedIntroReveal/`
+- production wrapper in `src/scenes/BakedIntroReveal/BakedIntroReveal.jsx`
+- `/test` harness wrapper in `src/scenes/TestRevealExperiment/TestRevealExperiment.jsx`
 
 ### Hero Composition
 

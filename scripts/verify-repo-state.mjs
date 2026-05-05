@@ -38,7 +38,8 @@ const repoState = JSON.parse(readFileSync(repoStatePath, "utf8"));
 
 const failures = [];
 const validSceneStatuses = new Set(["planned", "partial", "implemented"]);
-const expectedScenes = ["introReveal", "heroComposition", "freshnessTransition"];
+const expectedScenes = ["bakedIntroReveal", "heroComposition", "freshnessTransition"];
+const validScenarioModes = new Set(["app", "test"]);
 const packageJson = JSON.parse(readFileSync(path.join(repoRoot, "package.json"), "utf8"));
 const packageScripts = packageJson.scripts || {};
 
@@ -112,12 +113,16 @@ assert(
 for (const scenario of repoState.verification?.browserScenarios || []) {
   assert(typeof scenario.name === "string" && scenario.name.length > 0, "each browser scenario must have a name");
   assert(
-    typeof scenario.viewport?.width === "number" && typeof scenario.viewport?.height === "number",
-    `browser scenario '${scenario.name ?? "unknown"}' must have numeric viewport width/height`
+    typeof scenario.path === "string" && scenario.path.length > 0,
+    `browser scenario '${scenario.name ?? "unknown"}' must have a non-empty path`
   );
   assert(
-    typeof scenario.expectedMotionProfile === "string",
-    `browser scenario '${scenario.name ?? "unknown"}' must define expectedMotionProfile`
+    scenario.mode === undefined || validScenarioModes.has(scenario.mode),
+    `browser scenario '${scenario.name ?? "unknown"}' must use mode 'app' or 'test' when defined`
+  );
+  assert(
+    typeof scenario.viewport?.width === "number" && typeof scenario.viewport?.height === "number",
+    `browser scenario '${scenario.name ?? "unknown"}' must have numeric viewport width/height`
   );
   assert(
     typeof scenario.timeoutMs === "number" &&
@@ -125,6 +130,34 @@ for (const scenario of repoState.verification?.browserScenarios || []) {
       typeof scenario.maxLongestLongTaskMs === "number",
     `browser scenario '${scenario.name ?? "unknown"}' must define timeout and runtime thresholds`
   );
+
+  if ((scenario.mode ?? "app") === "app") {
+    assert(
+      typeof scenario.expectedMotionProfile === "string",
+      `browser scenario '${scenario.name ?? "unknown"}' must define expectedMotionProfile`
+    );
+    assert(
+      typeof scenario.expectedCurrentScene === "string",
+      `browser scenario '${scenario.name ?? "unknown"}' must define expectedCurrentScene`
+    );
+    assert(
+      typeof scenario.expectedIntroCompleteValue === "string",
+      `browser scenario '${scenario.name ?? "unknown"}' must define expectedIntroCompleteValue`
+    );
+    if (scenario.expectedIntroSceneCount !== undefined) {
+      assert(
+        typeof scenario.expectedIntroSceneCount === "number",
+        `browser scenario '${scenario.name ?? "unknown"}' expectedIntroSceneCount must be numeric`
+      );
+    }
+  }
+
+  if (scenario.mode === "test") {
+    assert(
+      typeof scenario.waitForSelector === "string" && scenario.waitForSelector.length > 0,
+      `browser scenario '${scenario.name ?? "unknown"}' must define waitForSelector for test mode`
+    );
+  }
 }
 
 for (const assetClass of ["primary", "secondary", "tertiary"]) {

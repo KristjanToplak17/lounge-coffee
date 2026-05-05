@@ -130,13 +130,25 @@ export const HeroComposition = forwardRef(function HeroComposition(
   const yellowCupMotionRef = useRef(null);
   const blackCupMotionRef = useRef(null);
   const orangeCupMotionRef = useRef(null);
+  const redCupShadowRef = useRef(null);
+  const yellowCupShadowRef = useRef(null);
+  const blackCupShadowRef = useRef(null);
+  const orangeCupShadowRef = useRef(null);
   const revealTimelineRef = useRef(null);
   const revealStartedRef = useRef(false);
+  const revealSettledRef = useRef(reducedMotion);
+  const blackCupTransitionVisibleRef = useRef(true);
 
   useLayoutEffect(() => {
+    revealSettledRef.current = reducedMotion;
+    blackCupTransitionVisibleRef.current = true;
+
     const ctx = gsap.context(() => {
       revealTimelineRef.current = heroCompositionTimeline({
         reducedMotion,
+        onComplete: () => {
+          revealSettledRef.current = true;
+        },
         elements: {
           chrome: chromeMotionRef.current,
           stats: statsMotionRef.current,
@@ -145,7 +157,11 @@ export const HeroComposition = forwardRef(function HeroComposition(
           redCup: redCupMotionRef.current,
           yellowCup: yellowCupMotionRef.current,
           blackCup: blackCupMotionRef.current,
-          orangeCup: orangeCupMotionRef.current
+          orangeCup: orangeCupMotionRef.current,
+          redCupShadow: redCupShadowRef.current,
+          yellowCupShadow: yellowCupShadowRef.current,
+          blackCupShadow: blackCupShadowRef.current,
+          orangeCupShadow: orangeCupShadowRef.current
         }
       });
     }, rootRef);
@@ -153,6 +169,8 @@ export const HeroComposition = forwardRef(function HeroComposition(
     return () => {
       revealTimelineRef.current = null;
       revealStartedRef.current = false;
+      revealSettledRef.current = reducedMotion;
+      blackCupTransitionVisibleRef.current = true;
       ctx.revert();
     };
   }, [reducedMotion]);
@@ -165,8 +183,38 @@ export const HeroComposition = forwardRef(function HeroComposition(
           return;
         }
 
+        revealSettledRef.current = false;
         revealStartedRef.current = true;
         revealTimelineRef.current?.play(0);
+      },
+      getBlackCupSourceMetrics() {
+        const element = blackCupMotionRef.current;
+
+        if (!element) {
+          return null;
+        }
+
+        const rect = element.getBoundingClientRect();
+
+        return {
+          top: rect.top,
+          left: rect.left,
+          width: rect.width,
+          height: rect.height
+        };
+      },
+      isRevealSettled() {
+        return revealSettledRef.current;
+      },
+      setBlackCupTransitionVisibility(isVisible) {
+        const element = blackCupMotionRef.current;
+
+        if (!element || blackCupTransitionVisibleRef.current === isVisible) {
+          return;
+        }
+
+        blackCupTransitionVisibleRef.current = isVisible;
+        gsap.set(element, { opacity: isVisible ? 1 : 0 });
       }
     }),
     []
@@ -182,12 +230,10 @@ export const HeroComposition = forwardRef(function HeroComposition(
       <div className="hero-composition__atmosphere hero-composition__atmosphere--far-left" aria-hidden="true" />
       <div className="hero-composition__atmosphere hero-composition__atmosphere--left" aria-hidden="true" />
       <div className="hero-composition__atmosphere hero-composition__atmosphere--center" aria-hidden="true" />
-      <div className="hero-composition__atmosphere hero-composition__atmosphere--right" aria-hidden="true" />
-      <div className="hero-composition__atmosphere hero-composition__atmosphere--far-right" aria-hidden="true" />
 
-      <div ref={chromeMotionRef} className="hero-composition__chrome-motion">
+      <div className="hero-composition__chrome-motion">
         <div className="hero-composition__chrome">
-          <div className="hero-composition__content-frame">
+          <div ref={chromeMotionRef} className="hero-composition__content-frame">
             <header className="hero-composition__header">
               <a className="hero-composition__logo-link" href="#" aria-label="Lounge Coffee home">
                 <img
@@ -276,6 +322,18 @@ export const HeroComposition = forwardRef(function HeroComposition(
                   }
                   className={cup.motionClassName}
                 >
+                  <div
+                    ref={
+                      cup.key === "red"
+                        ? redCupShadowRef
+                        : cup.key === "yellow"
+                          ? yellowCupShadowRef
+                          : cup.key === "black"
+                            ? blackCupShadowRef
+                            : orangeCupShadowRef
+                    }
+                    className={`hero-composition__cup-ground-shadow hero-composition__cup-ground-shadow--${cup.key}`}
+                  />
                   <img className={cup.imageClassName} src={cup.src} alt={cup.alt} />
                 </div>
               ))}

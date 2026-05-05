@@ -1,0 +1,42 @@
+{
+  "entry": {
+    "scrollY": 679,
+    "heroOpacity": 0,
+    "overlayOpacity": 1,
+    "settledOpacity": 0,
+    "overlayRect": {
+      "top": 476,
+      "left": 598
+    }
+  },
+  "start": {
+    "scrollY": 819,
+    "heroOpacity": 0,
+    "overlayOpacity": 1,
+    "settledOpacity": 0,
+    "overlayRect": {
+      "top": 430,
+      "left": 550
+    }
+  },
+  "mid": {
+    "scrollY": 1119,
+    "heroOpacity": 0,
+    "overlayOpacity": 1,
+    "settledOpacity": 0,
+    "overlayRect": {
+      "top": 180,
+      "left": 492
+    }
+  },
+  "center": {
+    "scrollY": 1083,
+    "heroOpacity": 0,
+    "overlayOpacity": 1,
+    "settledOpacity": 0,
+    "overlayRect": {
+      "top": 216,
+      "left": 495
+    }
+  }
+}

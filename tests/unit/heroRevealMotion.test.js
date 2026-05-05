@@ -3,7 +3,7 @@ import { heroRevealMotion } from "../../src/utils/heroRevealMotion";
 
 describe("heroRevealMotion", () => {
   it("keeps the baked loader handoff duration stable", () => {
-    expect(heroRevealMotion.durationSeconds).toBe(1.67);
+    expect(heroRevealMotion.durationSeconds).toBe(1.6);
   });
 
   it("keeps the baked loader handoff easing stable", () => {

@@ -10,10 +10,13 @@ import coffeeCupBlack from "../../assets/coffeeCups/coffeeCup-black.webp";
 import coffeeCupOrange from "../../assets/coffeeCups/coffeeCup-orange.webp";
 import coffeeCupRed from "../../assets/coffeeCups/coffeeCup-red.webp";
 import coffeeCupYellow from "../../assets/coffeeCups/coffeeCup-yellow.webp";
-import logoDark from "../../assets/logo/logo-dark.webp";
-import logoLight from "../../assets/logo/logo-white.webp";
+import logoDark from "../../assets/logo/logo-dark-ui.webp";
+import logoLight from "../../assets/logo/logo-white-ui.webp";
 import shadowCoffeeLeaf from "../../assets/shadows/shadow-coffeeLeaf.webp";
-import stickerMascot from "../../assets/stickers/sticker-mascot.webp";
+import stickerCoffeePot from "../../assets/stickers/sticker-coffeePot-section.webp";
+import stickerMascot from "../../assets/stickers/sticker-mascot-ui.webp";
+import maskedCroissant from "../../assets/supportingImages/masked-croissant-pill.webp";
+import maskedCupOfCoffee from "../../assets/supportingImages/masked-cupOfCoffee-pill.webp";
 
 export const assetMap = {
   logos: {
@@ -28,7 +31,12 @@ export const assetMap = {
     coffeeLeaf: shadowCoffeeLeaf
   },
   stickers: {
+    coffeePot: stickerCoffeePot,
     mascot: stickerMascot
+  },
+  supportingImages: {
+    croissant: maskedCroissant,
+    cupOfCoffee: maskedCupOfCoffee
   },
   cups: {
     black: coffeeCupBlack,

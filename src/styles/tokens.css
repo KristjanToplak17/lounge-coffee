@@ -63,6 +63,17 @@
   --hero-cup-yellow-width: 364px;
   --hero-cup-black-width: 316px;
   --hero-cup-orange-width: 356px;
+  --freshness-panel-min-height: 1120px;
+  --freshness-frame-padding: 42px;
+  --freshness-section-gap: 128px;
+  --freshness-top-padding: 128px;
+  --freshness-type-size: 92px;
+  --freshness-type-letter-spacing: -3px;
+  --freshness-cup-width: 470px;
+  --freshness-pill-width: 280px;
+  --freshness-pill-height: 100px;
+  --freshness-row-height: 110px;
+  --freshness-row-gap: 16px;
 
   --ease-strong-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-strong-in-out: cubic-bezier(0.77, 0, 0.175, 1);

@@ -130,10 +130,16 @@ async function runScenario(browser, scenario) {
       }
     });
 
-    await page.goto(previewUrl, { waitUntil: "networkidle" });
-    await page.waitForSelector('[data-app="lounge-coffee"]', { timeout: 10_000 });
+    const scenarioUrl = new URL(scenario.path ?? "/", previewUrl).toString();
 
-    await page.waitForFunction(
+    await page.goto(scenarioUrl, { waitUntil: "networkidle" });
+
+    if ((scenario.mode ?? "app") === "test") {
+      await page.waitForSelector(scenario.waitForSelector, { timeout: scenario.timeoutMs });
+    } else {
+      await page.waitForSelector('[data-app="lounge-coffee"]', { timeout: 10_000 });
+
+      await page.waitForFunction(
         ({ expectedMotionProfile, expectedCurrentScene, expectedIntroCompleteValue }) => {
           const appNode = document.querySelector('[data-app="lounge-coffee"]');
           return (
@@ -142,17 +148,29 @@ async function runScenario(browser, scenario) {
             appNode?.getAttribute("data-current-scene") === expectedCurrentScene
           );
         },
-      {
-        expectedMotionProfile: scenario.expectedMotionProfile,
-        expectedCurrentScene: repoState.verification.expectedCurrentSceneAfterIntro,
-        expectedIntroCompleteValue: repoState.verification.expectedIntroCompleteValue
-      },
-      { timeout: scenario.timeoutMs }
-    );
+        {
+          expectedMotionProfile: scenario.expectedMotionProfile,
+          expectedCurrentScene:
+            scenario.expectedCurrentScene ?? repoState.verification.expectedCurrentSceneAfterIntro,
+          expectedIntroCompleteValue:
+            scenario.expectedIntroCompleteValue ?? repoState.verification.expectedIntroCompleteValue
+        },
+        { timeout: scenario.timeoutMs }
+      );
 
-    const introSceneCount = await page.locator('[data-scene="intro"]').count();
-    if (introSceneCount !== 0) {
-      throw new Error("Intro scene still exists after intro completion marker was reached.");
+      if (typeof scenario.expectedIntroSceneCount === "number") {
+        const introSceneCount = await page.locator('[data-scene="intro"]').count();
+        if (introSceneCount !== scenario.expectedIntroSceneCount) {
+          throw new Error(
+            `Expected ${scenario.expectedIntroSceneCount} intro scene node(s), received ${introSceneCount}.`
+          );
+        }
+      } else if ((scenario.expectedIntroCompleteValue ?? repoState.verification.expectedIntroCompleteValue) === "true") {
+        const introSceneCount = await page.locator('[data-scene="intro"]').count();
+        if (introSceneCount !== 0) {
+          throw new Error("Intro scene still exists after intro completion marker was reached.");
+        }
+      }
     }
 
     const metrics = await page.evaluate(() => window.__loungeMetrics);

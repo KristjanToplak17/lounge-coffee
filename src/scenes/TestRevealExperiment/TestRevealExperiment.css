@@ -27,6 +27,12 @@
   overflow: hidden;
 }
 
+.test-reveal-experiment__split-scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
 .test-reveal-experiment__centerline {
   position: absolute;
   top: 0;

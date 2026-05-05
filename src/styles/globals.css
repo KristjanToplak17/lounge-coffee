@@ -1,16 +1,22 @@
+html {
+  scroll-behavior: auto;
+}
+
 body {
   background: var(--surface-page);
   color: var(--color-brown-espresso);
   font-family: var(--font-body);
   min-height: 100vh;
   min-height: 100svh;
-  overflow: hidden;
+  overflow-x: clip;
+}
+
+html.has-smooth-scroll,
+html.has-smooth-scroll body {
+  overscroll-behavior-y: none;
 }
 
 #root {
-  height: 100vh;
-  block-size: 100vh;
-  block-size: 100svh;
   min-height: 100vh;
   min-height: 100svh;
 }

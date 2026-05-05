@@ -1,0 +1,74 @@
+{
+  "entry": {
+    "scrollY": 679,
+    "heroOpacity": 0,
+    "overlayOpacity": 1,
+    "settledOpacity": 0,
+    "heroRect": {
+      "top": -399,
+      "left": 752
+    },
+    "overlayRect": {
+      "top": 869,
+      "left": 598
+    },
+    "settledRect": {
+      "top": 618,
+      "left": 485
+    }
+  },
+  "start": {
+    "scrollY": 819,
+    "heroOpacity": 0,
+    "overlayOpacity": 1,
+    "settledOpacity": 0,
+    "heroRect": {
+      "top": -539,
+      "left": 752
+    },
+    "overlayRect": {
+      "top": 1051,
+      "left": 550
+    },
+    "settledRect": {
+      "top": 478,
+      "left": 485
+    }
+  },
+  "mid": {
+    "scrollY": 1119,
+    "heroOpacity": 0,
+    "overlayOpacity": 1,
+    "settledOpacity": 0,
+    "heroRect": {
+      "top": -839,
+      "left": 752
+    },
+    "overlayRect": {
+      "top": 1273,
+      "left": 492
+    },
+    "settledRect": {
+      "top": 178,
+      "left": 485
+    }
+  },
+  "center": {
+    "scrollY": 1083,
+    "heroOpacity": 0,
+    "overlayOpacity": 1,
+    "settledOpacity": 0,
+    "heroRect": {
+      "top": -803,
+      "left": 752
+    },
+    "overlayRect": {
+      "top": 1258,
+      "left": 495
+    },
+    "settledRect": {
+      "top": 214,
+      "left": 485
+    }
+  }
+}

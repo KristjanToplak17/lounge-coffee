@@ -9,27 +9,24 @@ The repository already includes the full asset base needed for the first impleme
 ### Coffee Bean
 
 - Files:
-  - `assets/coffeeBean/coffeeBean-full.webp`
   - `assets/coffeeBean/coffeeBean-left.webp`
   - `assets/coffeeBean/coffeeBean-right.webp`
 - Narrative role: anticipation and transformation
 - Scene assignment: intro sequence and reveal transition
 - Priority: primary
 - V1 scope: yes
-- Notes: full bean should read as one object before the split; halves must align precisely
+- Notes: split halves are the production intro bean assets and must align precisely inside the baked reveal
 
 ### Reveal Seam Panels
 
 - Files:
-  - `assets/revealBackground/left-reveal.svg`
-  - `assets/revealBackground/right-reveal.svg`
-  - `assets/revealBackground/left-reveal-baked.png`
-  - `assets/revealBackground/right-reveal-baked.png`
+  - `assets/loader/baked/left-reveal.svg`
+  - `assets/loader/baked/right-reveal.svg`
 - Narrative role: seam edge source for the intro crack / reveal
 - Scene assignment: intro sequence only
 - Priority: primary
 - V1 scope: yes
-- Notes: baked seam panels are the production edge-source assets for the current intro implementation; legacy SVGs remain in repo as reference / fallback inputs and should not be deleted until the seam system is intentionally replaced
+- Notes: these are the production baked panel edge-source assets for the current intro implementation
 
 ### Bean Fragments
 
@@ -109,7 +106,7 @@ The repository already includes the full asset base needed for the first impleme
 
 `Preferred`:
 
-- preload intro bean and logo assets
+- preload baked intro panel, split bean, fragment, shadow, and logo assets
 - prioritize hero cups needed above the fold
 - defer or lazy-load tertiary supporting imagery where possible
 

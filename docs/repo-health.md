@@ -28,6 +28,7 @@ Overall status: `In Progress`
 - browser verification now captures a small screenshot checkpoint set
 - browser verification now records lightweight motion-health metrics
 - build output size drift is now tracked against a repo-local baseline
+- baked intro debug poses and the `/test` loader harness are now part of browser verification coverage
 
 ## Open Harness Debt
 
@@ -41,7 +42,7 @@ Overall status: `In Progress`
 
 - add docs/plans discipline for non-trivial work
 - formalize blocking versus warning-only checks in CI once CI exists
-- expand browser verification beyond the current intro-focused flow as hero and freshness scenes become real
+- expand browser verification beyond the current baked intro + `/test` flow as hero and freshness scenes become real
 - refine screenshot review policy as more checkpoints are added
 
 ### Low priority

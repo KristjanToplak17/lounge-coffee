@@ -1,7 +1,7 @@
 {
   "phase": "phase_7_build_output_tracking",
   "scenes": {
-    "introReveal": {
+    "bakedIntroReveal": {
       "status": "implemented"
     },
     "heroComposition": {
@@ -31,32 +31,125 @@
     "browserScenarios": [
       {
         "name": "desktop-full-motion",
+        "mode": "app",
+        "path": "/",
         "viewport": { "width": 1440, "height": 900 },
         "reducedMotion": "no-preference",
         "expectedMotionProfile": "full",
+        "expectedCurrentScene": "hero",
+        "expectedIntroCompleteValue": "true",
+        "expectedIntroSceneCount": 0,
         "timeoutMs": 12000,
         "maxCls": 0.02,
         "maxLongestLongTaskMs": 250
       },
       {
         "name": "desktop-reduced-motion",
+        "mode": "app",
+        "path": "/",
         "viewport": { "width": 1440, "height": 900 },
         "reducedMotion": "reduce",
         "expectedMotionProfile": "reduced",
+        "expectedCurrentScene": "hero",
+        "expectedIntroCompleteValue": "true",
+        "expectedIntroSceneCount": 0,
         "timeoutMs": 8000,
         "maxCls": 0.02,
         "maxLongestLongTaskMs": 250
       },
       {
         "name": "mobile-full-motion",
+        "mode": "app",
+        "path": "/",
         "viewport": { "width": 390, "height": 844 },
         "isMobile": true,
         "hasTouch": true,
         "reducedMotion": "no-preference",
         "expectedMotionProfile": "full",
+        "expectedCurrentScene": "hero",
+        "expectedIntroCompleteValue": "true",
+        "expectedIntroSceneCount": 0,
         "timeoutMs": 12000,
         "maxCls": 0.03,
         "maxLongestLongTaskMs": 300
+      },
+      {
+        "name": "desktop-baked-start-debug",
+        "mode": "app",
+        "path": "/?introDebug=start",
+        "viewport": { "width": 1440, "height": 900 },
+        "reducedMotion": "no-preference",
+        "expectedMotionProfile": "full",
+        "expectedCurrentScene": "intro",
+        "expectedIntroCompleteValue": "false",
+        "expectedIntroSceneCount": 1,
+        "timeoutMs": 4000,
+        "maxCls": 0.02,
+        "maxLongestLongTaskMs": 250
+      },
+      {
+        "name": "desktop-baked-mid-debug",
+        "mode": "app",
+        "path": "/?introDebug=mid",
+        "viewport": { "width": 1440, "height": 900 },
+        "reducedMotion": "no-preference",
+        "expectedMotionProfile": "full",
+        "expectedCurrentScene": "intro",
+        "expectedIntroCompleteValue": "false",
+        "expectedIntroSceneCount": 1,
+        "timeoutMs": 4000,
+        "maxCls": 0.02,
+        "maxLongestLongTaskMs": 250
+      },
+      {
+        "name": "desktop-baked-end-debug",
+        "mode": "app",
+        "path": "/?introDebug=end",
+        "viewport": { "width": 1440, "height": 900 },
+        "reducedMotion": "no-preference",
+        "expectedMotionProfile": "full",
+        "expectedCurrentScene": "intro",
+        "expectedIntroCompleteValue": "false",
+        "expectedIntroSceneCount": 1,
+        "timeoutMs": 4000,
+        "maxCls": 0.02,
+        "maxLongestLongTaskMs": 250
+      },
+      {
+        "name": "desktop-test-start",
+        "mode": "test",
+        "path": "/test?state=start",
+        "viewport": { "width": 1440, "height": 900 },
+        "reducedMotion": "no-preference",
+        "expectedMotionProfile": "full",
+        "waitForSelector": ".test-reveal-experiment[data-state='start']",
+        "timeoutMs": 4000,
+        "maxCls": 0.02,
+        "maxLongestLongTaskMs": 250
+      },
+      {
+        "name": "desktop-test-mid",
+        "mode": "test",
+        "path": "/test?state=mid",
+        "viewport": { "width": 1440, "height": 900 },
+        "reducedMotion": "no-preference",
+        "expectedMotionProfile": "full",
+        "waitForSelector": ".test-reveal-experiment[data-state='mid']",
+        "timeoutMs": 4000,
+        "maxCls": 0.02,
+        "maxLongestLongTaskMs": 250
+      },
+      {
+        "name": "desktop-test-end",
+        "mode": "test",
+        "path": "/test?state=end",
+        "viewport": { "width": 1440, "height": 900 },
+        "reducedMotion": "no-preference",
+        "expectedMotionProfile": "full",
+        "waitForSelector": ".test-reveal-experiment[data-state='end']",
+        "timeoutMs": 4000,
+        "maxCls": 0.02,
+        "maxLongestLongTaskMs": 250
       }
     ]
   },

@@ -1,0 +1,22 @@
+{
+  "scrollY": 0,
+  "heroBottom": 900,
+  "sectionTop": 899,
+  "labelsTop": 1027,
+  "statementWidth": 1180,
+  "cupCenterX": 720,
+  "cupCenterY": 1790,
+  "rowHeights": [
+    110,
+    110,
+    110
+  ],
+  "rowGaps": [
+    16,
+    16
+  ],
+  "visibleMobile": "grid",
+  "visibleTablet": "grid",
+  "visibleDesktop": "grid",
+  "docHeight": 900
+}

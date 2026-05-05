@@ -1,0 +1,24 @@
+{
+  "introComplete": "true",
+  "scrollY": 1215,
+  "heroBottom": 900,
+  "sectionTop": 899,
+  "labelsTop": 1027,
+  "spacing": 127,
+  "statementWidth": 1180,
+  "cupCenterX": 720,
+  "cupCenterY": 575,
+  "rowHeights": [
+    110,
+    110,
+    110
+  ],
+  "rowGaps": [
+    16,
+    16
+  ],
+  "visibleDesktop": "grid",
+  "visibleTablet": "grid",
+  "visibleMobile": "grid",
+  "docHeight": 2432
+}
