@@ -9,45 +9,47 @@ const sectionStyles = {
     minBlockSize: "var(--freshness-current-panel-min-height)",
     overflow: "clip",
     isolation: "isolate",
-    background: [
-      "radial-gradient(circle at 12% 18%, rgba(223, 193, 168, 0.18), transparent 20%)",
-      "radial-gradient(circle at 50% 56%, rgba(238, 200, 138, 0.18), transparent 24%)",
-      "radial-gradient(circle at 92% 32%, rgba(223, 193, 168, 0.16), transparent 20%)",
-      "linear-gradient(180deg, rgba(240, 232, 220, 0) 0%, rgba(240, 232, 220, 0.92) 12%, rgba(240, 232, 220, 1) 20%)",
-      "var(--color-cream-stage)"
-    ].join(", ")
+    background: "transparent"
   },
   contentFrame: {
     position: "relative",
     inlineSize: "min(100%, var(--hero-stage-max-width))",
     minBlockSize: "var(--freshness-current-panel-min-height)",
     marginInline: "auto",
-    padding: "calc(clamp(90px, 8.8vw, 128px) + 28px) clamp(16px, 2.9vw, 42px) 120px"
+    padding: [
+      "calc(clamp(90px, 8vw, 112px) + 28px)",
+      "clamp(16px, 2.9vw, 42px)",
+      "calc(clamp(90px, 8vw, 112px) + 28px)"
+    ].join(" ")
   },
   labels: {
     position: "relative",
     zIndex: 4,
     display: "flex",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    gap: "1rem"
+    justifyContent: "center",
+    alignItems: "center"
   },
-  labelBase: {
+  tag: {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "12px",
+    padding: "12px 16px",
+    border: "1.5px solid rgba(53, 21, 18, 0.4)",
+    borderRadius: "999px",
+    background: "rgba(240, 232, 220, 0.74)",
+    backdropFilter: "blur(10px)"
+  },
+  tagText: {
     margin: 0,
     color: "var(--color-brown-espresso)",
     fontFamily: "\"Haas Grot Disp Trial\", var(--font-display)",
-    letterSpacing: "-0.5px"
-  },
-  labelLeft: {
-    fontSize: "clamp(24px, 2.2vw, 28px)",
-    fontWeight: 600
-  },
-  labelRight: {
-    maxInlineSize: "clamp(116px, 12vw, 160px)",
-    fontSize: "clamp(18px, 1.6vw, 20px)",
-    fontWeight: 400,
-    lineHeight: 1.15,
-    textAlign: "end"
+    fontSize: "14px",
+    fontWeight: 700,
+    letterSpacing: "0.04em",
+    lineHeight: 1,
+    textAlign: "center",
+    textTransform: "uppercase"
   },
   artboard: {
     position: "relative",
@@ -72,8 +74,8 @@ const sectionStyles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    minBlockSize: "clamp(94px, 7.6vw, 110px)",
-    gap: "clamp(14px, 1.2vw, 16px)"
+    minBlockSize: "clamp(90px, 7vw, 100px)",
+    gap: "clamp(14px, 1vw, 16px)"
   },
   pill: {
     display: "inline-flex",
@@ -82,7 +84,7 @@ const sectionStyles = {
     overflow: "hidden",
     borderRadius: "999px",
     boxShadow: "0 16px 34px rgba(53, 21, 18, 0.08), 0 10px 30px rgba(238, 200, 138, 0.14)",
-    transform: "translateY(-2px)"
+    transform: "translateY(6px)"
   },
   pillImage: {
     inlineSize: "100%",
@@ -93,18 +95,18 @@ const sectionStyles = {
   sticker: {
     position: "absolute",
     zIndex: 3,
-    inlineSize: "clamp(96px, 8.2vw, 118px)",
+    inlineSize: "clamp(64px, 8.2vw, 80px)",
     blockSize: "auto",
-    insetInlineEnd: "clamp(126px, 14vw, 202px)",
-    insetBlockStart: "clamp(438px, 37vw, 458px)",
-    transform: "rotate(-15deg)"
+    insetInlineEnd: "clamp(50px, 14vw, 224px)",
+    insetBlockStart: "clamp(300px, 37vw, 354px)",
+    transform: "rotate(-12deg)"
   },
   cupTarget: {
     position: "absolute",
     zIndex: 6,
     insetInlineStart: "50%",
-    insetBlockStart: "58%",
-    inlineSize: "clamp(410px, 32.6vw, 470px)",
+    insetBlockStart: "35%",
+    inlineSize: "clamp(300px, 44vw, 460px)",
     opacity: 0,
     pointerEvents: "none",
     transform: "translate(-50%, -50%)"
@@ -116,14 +118,14 @@ const sectionStyles = {
   cupShadow: {
     position: "absolute",
     insetInlineStart: "50%",
-    insetBlockEnd: "-9%",
-    inlineSize: "46%",
-    blockSize: "8.5%",
+    insetBlockEnd: "-6%",
+    inlineSize: "50%",
+    blockSize: "10%",
     borderRadius: "999px",
     background: "radial-gradient(ellipse at center, rgba(53, 21, 18, 0.22) 0%, rgba(53, 21, 18, 0.15) 42%, rgba(53, 21, 18, 0.06) 68%, rgba(53, 21, 18, 0) 100%)",
-    filter: "blur(14px)",
+    filter: "blur(16px)",
     transform: "translateX(-50%)",
-    opacity: 0.34
+    opacity: 0.3
   },
   cupImage: {
     position: "relative",
@@ -160,6 +162,24 @@ function InlinePill({ src, alt, className = "" }) {
     <span className={`freshness-transition__pill ${className}`.trim()} style={sectionStyles.pill}>
       <img className="freshness-transition__pill-image" style={sectionStyles.pillImage} src={src} alt={alt} />
     </span>
+  );
+}
+
+function TagStarIcon() {
+  return (
+    <svg
+      className="freshness-transition__tag-star"
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        fill="currentColor"
+        d="M8 0.5l1.66 5.84L15.5 8l-5.84 1.66L8 15.5l-1.66-5.84L0.5 8l5.84-1.66L8 0.5z"
+      />
+    </svg>
   );
 }
 
@@ -236,19 +256,13 @@ export function FreshnessTransition({
 
       <div className="freshness-transition__content-frame" style={sectionStyles.contentFrame}>
         <div className="freshness-transition__labels" style={sectionStyles.labels}>
-          <p
-            id={titleId}
-            className="freshness-transition__label freshness-transition__label--left"
-            style={{ ...sectionStyles.labelBase, ...sectionStyles.labelLeft }}
-          >
-            Secret Sauce
-          </p>
-          <p
-            className="freshness-transition__label freshness-transition__label--right"
-            style={{ ...sectionStyles.labelBase, ...sectionStyles.labelRight }}
-          >
-            What&apos;s our secret?
-          </p>
+          <div className="freshness-transition__tag" style={sectionStyles.tag}>
+            <TagStarIcon />
+            <p id={titleId} className="freshness-transition__tag-text" style={sectionStyles.tagText}>
+              Signature Cups. Fresh Bites. Daily Delights.
+            </p>
+            <TagStarIcon />
+          </div>
         </div>
 
         <div className="freshness-transition__artboard" style={sectionStyles.artboard}>

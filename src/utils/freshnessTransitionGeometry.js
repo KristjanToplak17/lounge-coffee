@@ -1,8 +1,5 @@
-const HERO_CUP_FADE_THRESHOLD = 0.012;
-const TRANSITION_CUP_FADE_START = 0.018;
-const TRANSITION_CUP_FADE_END = 0.05;
-const SETTLED_CUP_FADE_START = 0.985;
-const SETTLED_CUP_FADE_END = 0.998;
+const TRANSITION_ACTIVE_THRESHOLD = 0.001;
+const SETTLED_CUP_THRESHOLD = 0.999;
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
@@ -10,14 +7,6 @@ function clamp(value, min, max) {
 
 export function lerp(start, end, progress) {
   return start + (end - start) * progress;
-}
-
-export function mapProgress(value, start, end) {
-  if (end <= start) {
-    return value >= end ? 1 : 0;
-  }
-
-  return clamp((value - start) / (end - start), 0, 1);
 }
 
 export function measureElementRect(element) {
@@ -54,13 +43,13 @@ export function buildCupTransitionMetrics(sourceRect, targetRect) {
 }
 
 export function getHeroCupVisible(progress) {
-  return progress < HERO_CUP_FADE_THRESHOLD;
+  return progress <= TRANSITION_ACTIVE_THRESHOLD;
 }
 
 export function getSettledCupOpacity(progress) {
-  return mapProgress(progress, SETTLED_CUP_FADE_START, SETTLED_CUP_FADE_END);
+  return progress >= SETTLED_CUP_THRESHOLD ? 1 : 0;
 }
 
 export function getTransitionCupOpacity(progress) {
-  return mapProgress(progress, TRANSITION_CUP_FADE_START, TRANSITION_CUP_FADE_END);
+  return progress > TRANSITION_ACTIVE_THRESHOLD && progress < SETTLED_CUP_THRESHOLD ? 1 : 0;
 }

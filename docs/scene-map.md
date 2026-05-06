@@ -7,6 +7,7 @@
 - **Intro Sequence** = Loader Stage + Reveal Transition
 - **Hero Composition** = main product landing scene
 - **Freshness Transition** = pinned cup handoff into the first freshness panel
+- **Bestsellers Section** = follow-up product-card showcase after the freshness panel when explicitly requested
 
 Use these names consistently in code and documentation.
 
@@ -110,3 +111,31 @@ What appears:
 - v1 includes the opening freshness panel
 - the pinned orange cup settles toward center-left
 - the first freshness panel is about freshness and craft, not origin geography or ecommerce details
+
+## Bestsellers Section
+
+What the visitor should feel:
+
+- appetite
+- confidence
+- product clarity
+
+What the visitor should understand:
+
+- Lounge Coffee can extend from expressive cups into packaged favorites without breaking the premium brand tone
+- the section is a clean product showcase, not a busy ecommerce catalog
+
+What appears:
+
+- cream background
+- large low-opacity `BESTSELLERS` word behind the product row
+- three rounded product cards
+- coffee packet renders for Cherry Mocha, Citrus Burst, and Honey Oat
+- concise supporting descriptions
+- visible pricing
+- one CTA per card
+
+`Preferred`:
+
+- the center product may receive subtle emphasis
+- cards should feel spacious, warm, and premium rather than transactional

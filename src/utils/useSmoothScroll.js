@@ -10,11 +10,11 @@ export function useSmoothScroll(enabled) {
     }
 
     const lenis = new Lenis({
-      duration: 1.08,
+      duration: 1,
       lerp: 0.11,
       smoothWheel: true,
       syncTouch: false,
-      wheelMultiplier: 0.92,
+      wheelMultiplier: 1,
       touchMultiplier: 1
     });
 

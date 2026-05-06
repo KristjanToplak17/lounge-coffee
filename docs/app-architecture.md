@@ -56,6 +56,18 @@ Animation ownership:
 
 - `src/animations/freshnessTransitionScroll.js`
 
+### Bestsellers Section
+
+Own in `src/scenes/BestsellersSection/`
+
+- follow-up product-card section after freshness
+- section heading, subtitle, and background wordmark
+- packet-card layout, price rows, and CTA presentation
+
+Animation ownership:
+
+- scene-local CSS interactions only unless a later doc explicitly assigns GSAP behavior
+
 ## Mounting Strategy
 
 `Locked`:

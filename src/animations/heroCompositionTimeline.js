@@ -35,11 +35,11 @@ function addShadowReveal(timeline, element, startAtSeconds) {
     element,
     {
       opacity: 0,
-      scale: 0.86,
+      scale: 0.7,
       willChange: "transform, opacity"
     },
     {
-      duration: 0.75,
+      duration: 0.5,
       ease: heroRevealMotion.ease,
       opacity: targetOpacity,
       scale: 1,

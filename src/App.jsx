@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { BakedIntroReveal } from "./scenes/BakedIntroReveal/BakedIntroReveal";
+import { BestsellersSection } from "./scenes/BestsellersSection/BestsellersSection";
 import { bakedIntroAssets } from "./scenes/BakedIntroReveal/bakedIntroAssets";
 import { FreshnessTransition } from "./scenes/FreshnessTransition/FreshnessTransition";
 import { HeroComposition } from "./scenes/HeroComposition/HeroComposition";
@@ -34,7 +35,7 @@ const appStyles = {
     minHeight: "100vh",
     minBlockSize: "100svh",
     isolation: "isolate",
-    background: "var(--color-cream-stage)"
+    backgroundColor: "var(--color-cream-stage)"
   },
   introLocked: {
     height: "100vh",
@@ -50,7 +51,8 @@ const appStyles = {
   heroShell: {
     position: "relative",
     minHeight: "100vh",
-    minBlockSize: "100svh"
+    minBlockSize: "100svh",
+    backgroundColor: "transparent"
   },
   overlayHost: {
     position: "fixed",
@@ -154,6 +156,8 @@ export default function App() {
           overlayHostRef={transitionOverlayHostRef}
           overlayCupRef={transitionCupRef}
         />
+
+        <BestsellersSection />
       </div>
 
       <div

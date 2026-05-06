@@ -6,6 +6,9 @@ import beanFragment5 from "../../assets/beanFragments/beanFragment-5.webp";
 import beanFragment6 from "../../assets/beanFragments/beanFragment-6.webp";
 import beanFragment7 from "../../assets/beanFragments/beanFragment-7.webp";
 import beanFragment8 from "../../assets/beanFragments/beanFragment-8.webp";
+import coffeePacketOrange from "../../assets/CoffeePackets/orange-packet.webp";
+import coffeePacketRed from "../../assets/CoffeePackets/red-packet.webp";
+import coffeePacketYellow from "../../assets/CoffeePackets/yellow-packet.webp";
 import coffeeCupBlack from "../../assets/coffeeCups/coffeeCup-black.webp";
 import coffeeCupOrange from "../../assets/coffeeCups/coffeeCup-orange.webp";
 import coffeeCupRed from "../../assets/coffeeCups/coffeeCup-red.webp";
@@ -43,5 +46,10 @@ export const assetMap = {
     orange: coffeeCupOrange,
     red: coffeeCupRed,
     yellow: coffeeCupYellow
+  },
+  packets: {
+    cherryMocha: coffeePacketRed,
+    citrusBurst: coffeePacketOrange,
+    honeyOat: coffeePacketYellow
   }
 };

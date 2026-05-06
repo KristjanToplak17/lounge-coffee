@@ -79,25 +79,37 @@ export function createFreshnessTransitionScroll({
       const cupY = lerp(0, translateY, travelProgress);
       const cupScale = lerp(1, scale, travelProgress);
       const cupRotation = lerp(sourceRotation, finalRotation, travelProgress);
+      const transitionCupOpacity = getTransitionCupOpacity(progress);
+      const settledCupOpacity = getSettledCupOpacity(progress);
+      const heroCupVisible = getHeroCupVisible(progress);
 
       gsap.set(overlayCup, {
         x: frozenSourceRect.left + cupX,
         y: frozenSourceRect.top + cupY,
         scale: cupScale,
-        opacity: getTransitionCupOpacity(progress)
+        opacity: transitionCupOpacity
       });
       gsap.set(overlayCupBody, { rotation: cupRotation });
 
-      gsap.set(settledCup, { opacity: getSettledCupOpacity(progress) });
+      gsap.set(settledCup, { opacity: settledCupOpacity });
       gsap.set(settledCupBody, { rotation: finalRotation });
-      heroController.setBlackCupTransitionVisibility?.(getHeroCupVisible(progress));
+      heroController.setBlackCupTransitionVisibility?.(heroCupVisible);
+
+      if (settledCupOpacity === 1) {
+        gsap.set(overlayCup, {
+          x: targetRect.left,
+          y: targetRect.top,
+          scale,
+          opacity: 0
+        });
+      }
     };
 
     const trigger = ScrollTrigger.create({
       trigger: root,
       start: "top bottom",
-      end: "center 42%",
-      scrub: 1.7,
+      end: "center 70%",
+      scrub: 3,
       invalidateOnRefresh: true,
       onRefresh: (self) => {
         syncSourceRect();

@@ -6,13 +6,7 @@
   min-height: 100svh;
   overflow: hidden;
   isolation: isolate;
-  background:
-    radial-gradient(circle at -6% 30%, rgba(223, 193, 168, 0.16), transparent 18%),
-    radial-gradient(circle at 18% 18%, rgba(223, 193, 168, 0.22), transparent 22%),
-    radial-gradient(circle at 50% 52%, rgba(238, 200, 138, 0.1), transparent 26%),
-    radial-gradient(circle at 106% 26%, rgba(223, 193, 168, 0.16), transparent 18%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 34%),
-    var(--color-cream-stage);
+  background: transparent;
 }
 
 .hero-composition::before,
@@ -371,26 +365,6 @@
   position: absolute;
 }
 
-.hero-composition__cup-ground-shadow {
-  position: absolute;
-  inset-inline-start: 50%;
-  inset-block-end: 1.2%;
-  border-radius: 999px;
-  background:
-    radial-gradient(
-      ellipse at center,
-      rgba(53, 21, 18, 0.22) 0%,
-      rgba(53, 21, 18, 0.15) 42%,
-      rgba(53, 21, 18, 0.06) 68%,
-      rgba(53, 21, 18, 0) 100%
-    );
-  filter: blur(14px);
-  transform: translateX(-50%);
-  transform-origin: center;
-  pointer-events: none;
-  z-index: 0;
-}
-
 .hero-composition__cup {
   position: relative;
   z-index: 1;
@@ -436,8 +410,8 @@
 
 .hero-composition__cup-motion--red {
   z-index: 3;
-  inset-block-start: -48px;
-  inset-inline-start: 10px;
+  inset-block-start: -56px;
+  inset-inline-start: 0px;
 }
 
 .hero-composition__cup--red {
@@ -446,8 +420,8 @@
 
 .hero-composition__cup-motion--yellow {
   z-index: 4;
-  inset-block-start: 132px;
-  inset-inline-start: 320px;
+  inset-block-start: 112px;
+  inset-inline-start: 312px;
 }
 
 .hero-composition__cup--yellow {
@@ -457,8 +431,8 @@
 
 .hero-composition__cup-motion--black {
   z-index: 4;
-  inset-block-start: 280px;
-  inset-inline-start: 718px;
+  inset-block-start: 276px;
+  inset-inline-start: 702px;
 }
 
 .hero-composition__cup--black {
@@ -468,13 +442,13 @@
 
 .hero-composition__cup-motion--orange {
   z-index: 3;
-  inset-block-start: 348px;
+  inset-block-start: 296px;
   inset-inline-end: 0px;
 }
 
 .hero-composition__cup--orange {
   inline-size: var(--hero-cup-orange-width);
-  transform: rotate(-11deg);
+  transform: rotate(0deg);
 }
 
 @media (max-width: 1440px) {

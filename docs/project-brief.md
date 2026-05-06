@@ -70,8 +70,17 @@ One hero cup remains and carries the visitor into the freshness story. The goal 
 - no multi-page architecture
 - no sections after the initial freshness section
 
+Current approved extension:
+
+- add one downstream **Bestsellers** section after the freshness panel when explicitly requested
+- keep it presentation-only and maintain the no-backend / no-checkout scope
+
 ## V1 Scene Scope
 
 `Locked`: v1 includes the intro sequence, hero composition, and the opening freshness section after the pinned transition.
 
 It does **not** include additional downstream sections beyond that first freshness panel.
+
+Explicit user-request exception:
+
+- the current implementation may include one **Bestsellers** follow-up section after freshness

@@ -9,7 +9,7 @@
   --color-white: #ffffff;
   --color-black: #0d0907;
 
-  --surface-page: linear-gradient(180deg, #f4ebde 0%, #eee4d7 100%);
+  --surface-page: var(--color-cream-stage);
   --surface-underlay: radial-gradient(
       circle at 18% 22%,
       rgba(223, 193, 168, 0.56),
@@ -59,10 +59,10 @@
   --hero-stage-max-width: 1440px;
   --hero-copy-width: 520px;
   --hero-atmosphere-blur: 90px;
-  --hero-cup-red-width: 316px;
-  --hero-cup-yellow-width: 364px;
-  --hero-cup-black-width: 316px;
-  --hero-cup-orange-width: 356px;
+  --hero-cup-red-width: 356px;
+  --hero-cup-yellow-width: 424px;
+  --hero-cup-black-width: 378px;
+  --hero-cup-orange-width: 320px;
   --freshness-panel-min-height: 1120px;
   --freshness-frame-padding: 42px;
   --freshness-section-gap: 128px;
