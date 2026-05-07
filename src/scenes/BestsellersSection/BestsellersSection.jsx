@@ -32,7 +32,7 @@ function ArrowIcon() {
 export function BestsellersSection() {
   return (
     <section
-      className="bestsellers-section"
+      className="bestsellers-section bordered-section"
       data-scene="bestsellers"
       aria-labelledby="bestsellers-title"
     >

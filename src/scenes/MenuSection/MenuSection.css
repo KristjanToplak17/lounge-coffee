@@ -1,0 +1,384 @@
+.menu-section {
+  --menu-section-break-margin-top: clamp(4rem, 8.88vw, 8rem);
+  --menu-section-break-height: clamp(5rem, 8.88vw, 8rem);
+  --menu-frame-inline-padding: clamp(1.25rem, 5.55vw, 5rem);
+  --menu-subsection-stack-gap: clamp(3.5rem, 6.94vw, 6.25rem);
+  --menu-content-gap: clamp(2.5rem, 4.44vw, 4rem);
+  --menu-grid-column-gap: clamp(2rem, 5.55vw, 5rem);
+  --menu-grid-row-gap: clamp(1.5rem, 2.22vw, 2rem);
+  --menu-product-meta-gap: clamp(1.4rem, 2.22vw, 2rem);
+  --menu-list-gap: clamp(2rem, 3.33vw, 3rem);
+  --menu-list-column-gap: clamp(2.25rem, 4.44vw, 4rem);
+  position: relative;
+  padding-block-end: clamp(4rem, 6vw, 6rem);
+  overflow: clip;
+  background: transparent;
+}
+
+.menu-section__section-break {
+  margin-block-start: var(--menu-section-break-margin-top);
+  block-size: var(--menu-section-break-height);
+  background: var(--color-brown-support);
+}
+
+.menu-section__frame {
+  position: relative;
+  inline-size: min(100%, var(--hero-stage-max-width));
+  margin-inline: auto;
+  padding-inline: var(--menu-frame-inline-padding);
+  padding-block-start: clamp(4rem, 6vw, 5rem);
+}
+
+.menu-section__hero {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: clamp(1.25rem, 3vw, 3rem);
+  padding-block-start: clamp(0.5rem, 1.2vw, 1rem);
+}
+
+.menu-section__title-block {
+  max-inline-size: 31rem;
+}
+
+.menu-section__title {
+  margin: 0;
+  color: var(--color-brown-espresso);
+  font-family: "Haas Grot Text R Trial", var(--font-body);
+  font-size: clamp(3.4rem, 6.8vw, 5.35rem);
+  font-weight: 700;
+  letter-spacing: -0.07em;
+  line-height: 0.91;
+}
+
+.menu-section__title-line {
+  display: block;
+}
+
+.menu-section__sticker {
+  flex: none;
+  inline-size: clamp(4.6rem, 6vw, 5.9rem);
+  block-size: auto;
+  margin-inline-end: clamp(0.25rem, 0.9vw, 1rem);
+  margin-block-start: clamp(0.35rem, 1vw, 0.8rem);
+}
+
+.menu-section__categories {
+  margin-block-start: clamp(3.35rem, 4.5vw, 4.15rem);
+}
+
+.menu-section__category + .menu-section__category {
+  margin-block-start: clamp(4rem, 5.55vw, 5rem);
+}
+
+.menu-section__category-title {
+  margin: 0 0 1.6rem;
+  color: var(--color-brown-espresso);
+  font-family: "Haas Grot Text R Trial", var(--font-body);
+  font-size: clamp(2.1rem, 3vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+}
+
+.menu-section__category-stack > * + * {
+  margin-block-start: var(--menu-subsection-stack-gap);
+}
+
+.menu-section__subsection-header {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.85rem, 1.4vw, 1.2rem);
+}
+
+.menu-section__subsection-label {
+  flex: none;
+  margin: 0;
+  color: var(--color-orange-stage);
+  font-family: "Haas Grot Disp Trial", var(--font-display);
+  font-size: clamp(1rem, 1.22vw, 1.18rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.menu-section__subsection-rule {
+  display: block;
+  inline-size: 100%;
+  block-size: 1px;
+  background: rgba(231, 91, 32, 0.22);
+}
+
+.menu-section__product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: var(--menu-grid-column-gap);
+  row-gap: var(--menu-grid-row-gap);
+  margin-block-start: var(--menu-content-gap);
+}
+
+.menu-section__product-grid > [role="listitem"] {
+  min-inline-size: 0;
+}
+
+.menu-section__product-item {
+  min-inline-size: 0;
+  display: grid;
+  grid-template-rows: minmax(0, var(--menu-row-stage-height, auto)) auto;
+  align-content: start;
+  block-size: 100%;
+}
+
+.menu-section__product-image-stage {
+  display: grid;
+  place-items: end center;
+  overflow: visible;
+}
+
+.menu-section__product-image-stage--drink {
+  min-block-size: clamp(14rem, 19vw, 17rem);
+}
+
+.menu-section__product-image-stage--pastry {
+  min-block-size: clamp(11rem, 14.5vw, 12.5rem);
+}
+
+.menu-section__product-image {
+  display: block;
+  inline-size: auto;
+  max-block-size: 100%;
+  block-size: auto;
+  user-select: none;
+}
+
+.menu-section__product-image--drink {
+  max-inline-size: min(100%, clamp(10rem, 12.4vw, 11.6rem));
+}
+
+.menu-section__product-image--pastry {
+  max-inline-size: min(100%, clamp(9.25rem, 12.5vw, 11.4rem));
+}
+
+.menu-section__product-meta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-block-start: var(--menu-product-meta-gap);
+  min-block-size: clamp(2.85rem, 3vw, 3.1rem);
+}
+
+.menu-section__product-name,
+.menu-section__product-price {
+  margin: 0;
+  color: var(--color-brown-espresso);
+  line-height: 1.1;
+}
+
+.menu-section__product-name {
+  min-inline-size: 0;
+  font-family: "Haas Grot Text R Trial", var(--font-body);
+  font-size: clamp(1.15rem, 1.38vw, 1.42rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+}
+
+.menu-section__product-price {
+  flex: none;
+  font-family: "Haas Grot Disp Trial", var(--font-display);
+  font-size: clamp(1rem, 1.2vw, 1.18rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+.menu-section__list-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--menu-list-column-gap);
+  row-gap: clamp(2rem, 3vw, 2.5rem);
+}
+
+.menu-section__text-column {
+  min-inline-size: 0;
+}
+
+.menu-section__text-list {
+  display: grid;
+  gap: var(--menu-list-gap);
+  margin-block-start: 3rem;
+}
+
+.menu-section__text-list-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.menu-section__text-list-name,
+.menu-section__text-list-price {
+  color: var(--color-brown-espresso);
+  line-height: 1.12;
+}
+
+.menu-section__text-list-name {
+  font-family: "Haas Grot Text R Trial", var(--font-body);
+  font-size: clamp(1.12rem, 1.28vw, 1.36rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.menu-section__text-list-price {
+  font-family: "Haas Grot Disp Trial", var(--font-display);
+  font-size: clamp(0.98rem, 1.08vw, 1.12rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+}
+
+.menu-section__subsection--signature-coffee .menu-section__product-grid,
+.menu-section__subsection--donuts .menu-section__product-grid {
+  margin-block-start: 1rem;
+}
+
+.menu-section__subsection--signature-coffee .menu-section__product-item,
+.menu-section__subsection--milk-based-cold .menu-section__product-item {
+  --menu-row-stage-height: clamp(18rem, 24vw, 22rem);
+}
+
+.menu-section__subsection--fresh-cold .menu-section__product-item {
+  --menu-row-stage-height: clamp(21rem, 27vw, 24.5rem);
+}
+
+.menu-section__subsection--donuts .menu-section__product-item {
+  --menu-row-stage-height: clamp(12rem, 14vw, 13.5rem);
+}
+
+.menu-section__subsection--croissants .menu-section__product-item {
+  --menu-row-stage-height: clamp(14.5rem, 18vw, 16.5rem);
+}
+
+.menu-section__subsection--signature-coffee .menu-section__product-image-stage,
+.menu-section__subsection--milk-based-cold .menu-section__product-image-stage {
+  min-block-size: clamp(18rem, 24vw, 22rem);
+}
+
+.menu-section__subsection--fresh-cold .menu-section__product-image-stage {
+  min-block-size: clamp(21rem, 27vw, 24.5rem);
+}
+
+.menu-section__subsection--donuts .menu-section__product-image-stage {
+  min-block-size: clamp(12rem, 14vw, 13.5rem);
+}
+
+.menu-section__subsection--croissants .menu-section__product-image-stage {
+  min-block-size: clamp(14.5rem, 18vw, 16.5rem);
+}
+
+.menu-section__subsection--fresh-cold .menu-section__product-image--drink {
+  max-inline-size: min(100%, clamp(10.4rem, 12.9vw, 12rem));
+}
+
+@media (max-width: 1180px) {
+  .menu-section {
+    --menu-section-break-margin-top: clamp(3rem, 6vw, 5rem);
+    --menu-section-break-height: clamp(4rem, 6vw, 5rem);
+    --menu-frame-inline-padding: clamp(1.25rem, 4vw, 3rem);
+    --menu-subsection-stack-gap: clamp(3rem, 5vw, 4.5rem);
+    --menu-content-gap: clamp(2.2rem, 3.8vw, 3.25rem);
+    --menu-grid-column-gap: clamp(1.5rem, 3.5vw, 2.5rem);
+    --menu-product-meta-gap: clamp(1.15rem, 2vw, 1.6rem);
+    --menu-list-column-gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .menu-section__product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .menu-section {
+    --menu-section-break-margin-top: clamp(2rem, 7vw, 3rem);
+    --menu-section-break-height: clamp(3rem, 7vw, 4rem);
+    --menu-frame-inline-padding: 1rem;
+    --menu-subsection-stack-gap: clamp(2.5rem, 9vw, 4rem);
+    --menu-content-gap: clamp(1.6rem, 6vw, 2.4rem);
+    --menu-grid-column-gap: clamp(1rem, 4vw, 1.4rem);
+    --menu-grid-row-gap: clamp(1.25rem, 5vw, 1.75rem);
+    --menu-product-meta-gap: clamp(0.9rem, 3.8vw, 1.4rem);
+    --menu-list-gap: clamp(1.25rem, 4.5vw, 2rem);
+    --menu-list-column-gap: 0;
+  }
+
+  .menu-section__hero {
+    gap: 1rem;
+  }
+
+  .menu-section__title {
+    font-size: clamp(2.8rem, 14vw, 4rem);
+    line-height: 0.92;
+  }
+
+  .menu-section__sticker {
+    inline-size: clamp(3.35rem, 16vw, 4.2rem);
+    margin-inline-end: 0;
+    margin-block-start: 0.6rem;
+  }
+
+  .menu-section__categories {
+    margin-block-start: 2.75rem;
+  }
+
+  .menu-section__category + .menu-section__category {
+    margin-block-start: 3.5rem;
+  }
+
+  .menu-section__subsection-label {
+    font-size: 0.95rem;
+  }
+
+  .menu-section__product-image-stage--drink {
+    min-block-size: clamp(10.75rem, 37vw, 13rem);
+  }
+
+  .menu-section__product-image-stage--pastry {
+    min-block-size: clamp(8rem, 28vw, 9.5rem);
+  }
+
+  .menu-section__product-image--drink {
+    max-inline-size: min(100%, clamp(7.6rem, 31vw, 9.4rem));
+  }
+
+  .menu-section__subsection--fresh-cold .menu-section__product-image--drink {
+    max-inline-size: min(100%, clamp(8.2rem, 33vw, 10rem));
+  }
+
+  .menu-section__product-image--pastry {
+    max-inline-size: min(100%, clamp(6.75rem, 28vw, 8.4rem));
+  }
+
+  .menu-section__product-name,
+  .menu-section__product-price,
+  .menu-section__text-list-name,
+  .menu-section__text-list-price {
+    font-size: 1rem;
+  }
+
+  .menu-section__list-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .menu-section__text-list {
+    margin-block-start: 2rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .menu-section__product-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -4,6 +4,7 @@ import { BestsellersSection } from "./scenes/BestsellersSection/BestsellersSecti
 import { bakedIntroAssets } from "./scenes/BakedIntroReveal/bakedIntroAssets";
 import { FreshnessTransition } from "./scenes/FreshnessTransition/FreshnessTransition";
 import { HeroComposition } from "./scenes/HeroComposition/HeroComposition";
+import { MenuSection } from "./scenes/MenuSection/MenuSection";
 import { TestRevealExperiment } from "./scenes/TestRevealExperiment/TestRevealExperiment";
 import { assetMap } from "./utils/assetMap";
 import { usePrefersReducedMotion } from "./utils/usePrefersReducedMotion";
@@ -105,6 +106,7 @@ export default function App() {
   const heroRevealRef = useRef(null);
   const transitionOverlayHostRef = useRef(null);
   const transitionCupRef = useRef(null);
+  const [scrollbarCompensation, setScrollbarCompensation] = useState(0);
 
   useSmoothScroll(introComplete && !prefersReducedMotion && !isTestRoute);
 
@@ -124,6 +126,24 @@ export default function App() {
     };
   }, [isTestRoute]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const syncScrollbarCompensation = () => {
+      const width = Math.max(window.innerWidth - document.documentElement.clientWidth, 0);
+      setScrollbarCompensation(width);
+    };
+
+    syncScrollbarCompensation();
+    window.addEventListener("resize", syncScrollbarCompensation);
+
+    return () => {
+      window.removeEventListener("resize", syncScrollbarCompensation);
+    };
+  }, []);
+
   const handleHeroRevealStart = useCallback(() => {
     heroRevealRef.current?.playReveal();
   }, []);
@@ -137,7 +157,8 @@ export default function App() {
       className="app-shell"
       style={{
         ...appStyles.shell,
-        ...(introComplete ? appStyles.shellScrolled : appStyles.introLocked)
+        ...(introComplete ? appStyles.shellScrolled : appStyles.introLocked),
+        paddingInlineEnd: introComplete ? 0 : scrollbarCompensation
       }}
       data-app="lounge-coffee"
       data-current-scene={introComplete ? "hero" : "intro"}
@@ -158,6 +179,8 @@ export default function App() {
         />
 
         <BestsellersSection />
+
+        <MenuSection />
       </div>
 
       <div

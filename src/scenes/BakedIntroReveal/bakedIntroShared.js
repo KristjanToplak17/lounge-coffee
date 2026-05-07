@@ -13,15 +13,15 @@ export const LOADER_TIMING = {
   initialHold: 0.2,
   loaderFill: 0.65,
   loaderCompleteHold: 0.3,
-  loaderFade: 0.3,
+  loaderFade: 0.2,
   startToMid: 1.3,
-  midHold: 0.4,
-  midToEnd: 2.4
+  midHold: 0.3,
+  midToEnd: 2.6
 };
 
 export const REDUCED_TIMING = {
   initialHold: 0.08,
-  loaderFill: 0.35,
+  loaderFill: 0.4,
   loaderCompleteHold: 0.08,
   loaderFade: 0.18,
   startToMid: 0.45,
@@ -30,9 +30,9 @@ export const REDUCED_TIMING = {
 };
 
 export const EASE = {
-  loaderFade: "cubic-bezier(0.4, 1, 0.5, 1)",
-  startToMid: "cubic-bezier(0.4, 1, 0.5, 1)",
-  midToEnd: "cubic-bezier(0.7, 0.2, 0.5, 1)"
+  loaderFade: "cubic-bezier(0.9, 0.4, 0.4, 1)",
+  startToMid: "cubic-bezier(0.1, 0.5, 0.7, 1)",
+  midToEnd: "cubic-bezier(0.8, 0.9, 0.3, 1)"
 };
 
 export const LEFT_BEAN = {

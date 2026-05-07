@@ -130,8 +130,8 @@
   transform: scaleX(0);
   transform-origin: center;
   transition:
-    transform 400ms var(--ease-strong-out),
-    opacity 180ms var(--ease-strong-out);
+    transform 220ms var(--ease-strong-out),
+    opacity 140ms var(--ease-strong-out);
 }
 
 .hero-composition__nav-link:hover::after,
@@ -140,9 +140,7 @@
   transform: scaleX(1);
 }
 
-.hero-composition__nav-link:hover,
 .hero-composition__nav-link:focus-visible,
-.hero-composition__utility:hover,
 .hero-composition__utility:focus-visible {
   color: var(--color-orange-stage);
 }
@@ -170,6 +168,9 @@
   border: 0;
   background: transparent;
   cursor: pointer;
+  transition:
+    color 180ms var(--ease-strong-out),
+    transform 160ms var(--ease-strong-out);
 }
 
 .hero-composition__caret-icon,
@@ -346,11 +347,22 @@
 
 .hero-composition__cta:hover {
   background: var(--color-orange-stage-hover);
-  box-shadow: 0 14px 34px rgba(231, 91, 32, 0.32);
+  box-shadow: 0 12px 28px rgba(231, 91, 32, 0.22);
 }
 
 .hero-composition__cta:active {
   transform: scale(0.975);
+}
+
+.hero-composition__utility:active {
+  transform: scale(0.975);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-composition__nav-link:hover,
+  .hero-composition__utility:hover {
+    color: var(--color-orange-stage);
+  }
 }
 
 .hero-composition__cup-stage {

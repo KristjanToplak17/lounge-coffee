@@ -1,10 +1,26 @@
 @media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
     scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
+  }
+
+  .hero-composition__nav-link,
+  .hero-composition__utility,
+  .hero-composition__cta,
+  .bestsellers-section__card,
+  .bestsellers-section__packet,
+  .bestsellers-section__button,
+  .menu-section__product-image {
+    transition-property: opacity, color, background-color, border-color, box-shadow !important;
+    transition-duration: 140ms !important;
+    transition-timing-function: ease-out !important;
   }
 }

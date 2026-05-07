@@ -100,7 +100,7 @@
 .baked-intro-reveal__fragment {
   opacity: 0;
   transform-origin: center;
-  filter: drop-shadow(0 6px 14px rgba(53, 21, 18, 0.18));
+  filter: drop-shadow(0 6px 14px rgba(53, 21, 18, 0.3));
   z-index: 3;
 }
 
