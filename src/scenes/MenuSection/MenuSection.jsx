@@ -37,10 +37,12 @@ function MenuSubsectionHeader({ label }) {
 
 function MenuProductItem({ item, variant }) {
   return (
-    <article className={`menu-section__product-item menu-section__product-item--${variant}`}>
+     <article
+      className={`menu-section__product-item menu-section__product-item--${variant} menu-section__product-item--${item.key}`}
+    >
       <div className={`menu-section__product-image-stage menu-section__product-image-stage--${variant}`}>
         <img
-          className={`menu-section__product-image menu-section__product-image--${variant}`}
+           className={`menu-section__product-image menu-section__product-image--${variant} menu-section__product-image--${item.key}`}
           src={menuImageMap[item.key]}
           alt={item.name}
           loading="lazy"

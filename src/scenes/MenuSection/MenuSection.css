@@ -1,9 +1,9 @@
 .menu-section {
   --menu-section-break-margin-top: clamp(4rem, 8.88vw, 8rem);
-  --menu-section-break-height: clamp(5rem, 8.88vw, 8rem);
+  --menu-section-break-height: clamp(7rem, 11.39vw, 10.25rem);
   --menu-frame-inline-padding: clamp(1.25rem, 5.55vw, 5rem);
   --menu-subsection-stack-gap: clamp(3.5rem, 6.94vw, 6.25rem);
-  --menu-content-gap: clamp(2.5rem, 4.44vw, 4rem);
+  --menu-content-gap: clamp(1.5rem, 2.22vw, 2rem);
   --menu-grid-column-gap: clamp(2rem, 5.55vw, 5rem);
   --menu-grid-row-gap: clamp(1.5rem, 2.22vw, 2rem);
   --menu-product-meta-gap: clamp(1.4rem, 2.22vw, 2rem);
@@ -239,10 +239,6 @@
   white-space: nowrap;
 }
 
-.menu-section__subsection--signature-coffee .menu-section__product-grid,
-.menu-section__subsection--donuts .menu-section__product-grid {
-  margin-block-start: 1rem;
-}
 
 .menu-section__subsection--signature-coffee .menu-section__product-item,
 .menu-section__subsection--milk-based-cold .menu-section__product-item {
@@ -279,16 +275,16 @@
 }
 
 .menu-section__subsection--fresh-cold .menu-section__product-image--drink {
-  max-inline-size: min(100%, clamp(10.4rem, 12.9vw, 12rem));
+  max-inline-size: min(100%, clamp(10.4rem, 12.9vw, 11rem));
 }
 
 @media (max-width: 1180px) {
   .menu-section {
     --menu-section-break-margin-top: clamp(3rem, 6vw, 5rem);
-    --menu-section-break-height: clamp(4rem, 6vw, 5rem);
+    --menu-section-break-height: clamp(5.5rem, 8vw, 7.75rem);
     --menu-frame-inline-padding: clamp(1.25rem, 4vw, 3rem);
     --menu-subsection-stack-gap: clamp(3rem, 5vw, 4.5rem);
-    --menu-content-gap: clamp(2.2rem, 3.8vw, 3.25rem);
+    --menu-content-gap: clamp(1.35rem, 2.7vw, 1.85rem);
     --menu-grid-column-gap: clamp(1.5rem, 3.5vw, 2.5rem);
     --menu-product-meta-gap: clamp(1.15rem, 2vw, 1.6rem);
     --menu-list-column-gap: clamp(1.5rem, 3vw, 2.5rem);
@@ -302,10 +298,10 @@
 @media (max-width: 760px) {
   .menu-section {
     --menu-section-break-margin-top: clamp(2rem, 7vw, 3rem);
-    --menu-section-break-height: clamp(3rem, 7vw, 4rem);
+    --menu-section-break-height: clamp(4rem, 10vw, 5.5rem);
     --menu-frame-inline-padding: 1rem;
     --menu-subsection-stack-gap: clamp(2.5rem, 9vw, 4rem);
-    --menu-content-gap: clamp(1.6rem, 6vw, 2.4rem);
+    --menu-content-gap: clamp(1.15rem, 5vw, 1.6rem);
     --menu-grid-column-gap: clamp(1rem, 4vw, 1.4rem);
     --menu-grid-row-gap: clamp(1.25rem, 5vw, 1.75rem);
     --menu-product-meta-gap: clamp(0.9rem, 3.8vw, 1.4rem);
@@ -353,7 +349,7 @@
   }
 
   .menu-section__subsection--fresh-cold .menu-section__product-image--drink {
-    max-inline-size: min(100%, clamp(8.2rem, 33vw, 10rem));
+    max-inline-size: min(100%, clamp(8.2rem, 33vw, 9rem));
   }
 
   .menu-section__product-image--pastry {
